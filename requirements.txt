@@ -2,3 +2,5 @@ yfinance>=0.2.40
 requests>=2.31.0
 pytest>=7.0
 pytest-mock>=3.0
+fredapi>=0.5.0
+pyyaml>=6.0

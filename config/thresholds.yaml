@@ -1,0 +1,13 @@
+vix:
+  warn: 20
+  reduce: 25
+  exit: 30
+
+usdkrw:
+  high: 1450
+  low: 1250
+
+hy_spread:
+  weekly_warning_bps: 50
+
+falling_knife_mode: true
