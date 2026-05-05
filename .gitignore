@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pyo
+.env
+.env.local
+backtest_results/
+.pytest_cache/
+*.egg-info/
+*.pdf
+.claude/
