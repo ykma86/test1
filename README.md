@@ -34,7 +34,7 @@ pip install -r requirements.txt
 # 4. Streamlit 대시보드 실행
 streamlit run main.py
 
-프로젝트 구조
+##프로젝트 구조
 macro-dashboard/
 ├── CLAUDE.md
 ├── README.md
@@ -46,13 +46,13 @@ macro-dashboard/
 ├── tests/
 └── backtest/
 
-중요 주의사항
+##중요 주의사항
 
 본 시스템은 투자 참고용 정보 제공 도구이며, 투자 권유나 자문이 아닙니다.
 모든 매매 결정은 사용자 본인 판단으로 진행해주세요.
 레버리지 ETF는 높은 변동성을 가지고 있으니 위험 관리를 철저히 하세요.
 
-개발 단계
+##개발 단계
 
 Phase 0 (MVP): VIX 기반 최소 알림 시스템
 Phase 1~10: 점진적 확장 예정
