@@ -1,5 +1,6 @@
 """Phase 1: 12개 거시경제 지표 fetch."""
 import logging
+import time
 from typing import Optional
 
 import yfinance as yf
@@ -67,19 +68,24 @@ def fetch_series(
     end_date: Optional[str] = None,
     n_periods: int = 20,
 ) -> Optional[pd.Series]:
-    """FRED 시리즈 최근 n_periods개 반환. end_date 지정 시 해당 날짜 기준."""
-    try:
-        kwargs: dict = {}
-        if end_date:
-            kwargs["observation_end"] = end_date
-        data = Fred(api_key=api_key).get_series(series_id, **kwargs).dropna()
-        if data.empty:
-            logger.warning(f"FRED {series_id}: 빈 데이터")
+    """FRED 시리즈 최근 n_periods개 반환. end_date 지정 시 해당 날짜 기준. 500 오류 시 1회 재시도."""
+    kwargs: dict = {}
+    if end_date:
+        kwargs["observation_end"] = end_date
+    for attempt in range(2):
+        try:
+            data = Fred(api_key=api_key).get_series(series_id, **kwargs).dropna()
+            if data.empty:
+                logger.warning(f"FRED {series_id}: 빈 데이터")
+                return None
+            return data.iloc[-n_periods:]
+        except Exception as e:
+            if "Internal Server Error" in str(e) and attempt == 0:
+                time.sleep(2)
+                continue
+            logger.warning(f"FRED {series_id} series fetch 실패: {e}")
             return None
-        return data.iloc[-n_periods:]
-    except Exception as e:
-        logger.warning(f"FRED {series_id} series fetch 실패: {e}")
-        return None
+    return None
 
 
 def fetch_move_series(

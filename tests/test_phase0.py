@@ -64,31 +64,39 @@ class TestStateManagement:
 
 
 class TestDuplicateAlertPrevention:
+    _base_state = {"threshold_level": 20, "last_vix": 21.0, "last_updated": None,
+                   "phase": "불명확", "regime": "불명확", "momentum_top3": [], "momentum_scores": {}}
+
+    @patch("main.scan_all", return_value=[])
     @patch("main.fetch_vix", return_value=22.0)
-    @patch("main.load_state", return_value={"threshold_level": 20, "last_vix": 21.0, "last_updated": None})
+    @patch("main.load_state", return_value=_base_state)
     @patch("main.send_telegram")
     @patch("main.save_state")
-    def test_no_alert_when_level_unchanged(self, mock_save, mock_send, mock_load, mock_fetch):
+    def test_no_alert_when_level_unchanged(self, mock_save, mock_send, mock_load, mock_fetch, mock_scan):
         main(token="tok", chat_id="123")
         mock_send.assert_not_called()
         mock_save.assert_not_called()
 
+    @patch("main.scan_all", return_value=[])
     @patch("main.fetch_vix", return_value=26.0)
-    @patch("main.load_state", return_value={"threshold_level": 20, "last_vix": 21.0, "last_updated": None})
+    @patch("main.load_state", return_value=_base_state)
     @patch("main.send_telegram")
     @patch("main.save_state")
-    def test_alert_fires_on_level_change(self, mock_save, mock_send, mock_load, mock_fetch):
+    def test_alert_fires_on_level_change(self, mock_save, mock_send, mock_load, mock_fetch, mock_scan):
         main(token="tok", chat_id="123")
         mock_send.assert_called_once()
         mock_save.assert_called_once()
 
 
 class TestDryRun:
+    @patch("main.scan_all", return_value=[])
     @patch("main.fetch_vix", return_value=26.0)
-    @patch("main.load_state", return_value={"threshold_level": 0, "last_vix": None, "last_updated": None})
+    @patch("main.load_state", return_value={"threshold_level": 0, "last_vix": None, "last_updated": None,
+                                             "phase": "불명확", "regime": "불명확",
+                                             "momentum_top3": [], "momentum_scores": {}})
     @patch("main.send_telegram")
     @patch("main.save_state")
-    def test_dry_run_skips_send_and_save(self, mock_save, mock_send, mock_load, mock_fetch):
+    def test_dry_run_skips_send_and_save(self, mock_save, mock_send, mock_load, mock_fetch, mock_scan):
         main(dry_run=True)
         mock_send.assert_not_called()
         mock_save.assert_not_called()

@@ -13,6 +13,7 @@ import yfinance as yf
 
 from classifier import classify_phase
 from fetchers import fetch_series, fetch_move_series
+from momentum import scan_all
 from regime import classify_regime, get_position_guide, REGIME_EMOJI
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -55,6 +56,8 @@ def load_state() -> dict:
     state = json.loads(STATE_FILE.read_text())
     state.setdefault("phase", "불명확")
     state.setdefault("regime", "불명확")
+    state.setdefault("momentum_top3", [])
+    state.setdefault("momentum_scores", {})
     return state
 
 
@@ -114,6 +117,22 @@ def build_regime_message(new_regime: str, prev_regime: str, phase: str) -> str:
     )
 
 
+def build_momentum_top3_message(results: list[dict]) -> str:
+    """모멘텀 TOP 3 변경 알림 메시지."""
+    lines = ["🚀 모멘텀 TOP 3 변경"]
+    for i, r in enumerate(results[:3], 1):
+        lines.append(f"{i}. {r['ticker']}: {r['score']}/7점")
+    return "\n".join(lines) + DISCLAIMER
+
+
+def build_degradation_message(degraded: list[tuple[str, int, int]]) -> str:
+    """모멘텀 약화 알림 메시지 (5점 이상 → 3점 이하)."""
+    lines = ["⚠️ 모멘텀 약화 경고"]
+    for ticker, prev, curr in degraded:
+        lines.append(f"• {ticker}: {prev}점 → {curr}점")
+    return "\n".join(lines) + DISCLAIMER
+
+
 def build_phase_message(new_phase: str, prev_phase: str) -> str:
     """단계 전환 알림 메시지 생성."""
     e_new  = PHASE_EMOJI.get(new_phase, "⚪")
@@ -170,11 +189,25 @@ def main(
             new_regime = classify_regime(*regime_data)
             logger.info(f"체제: {prev_regime} → {new_regime}")
 
+    # 모멘텀 스캔
+    prev_top3 = state.get("momentum_top3", [])
+    prev_scores = state.get("momentum_scores", {})
+    momentum_results = scan_all()
+    new_scores = {r["ticker"]: r["score"] for r in momentum_results}
+    new_top3 = [r["ticker"] for r in momentum_results[:3]]
+
+    top3_changed = new_top3 != prev_top3
+    degraded = [
+        (t, prev_scores[t], new_scores[t])
+        for t in new_scores
+        if prev_scores.get(t, 0) >= 5 and new_scores[t] <= 3
+    ]
+
     level_changed = new_level != prev_level
     phase_changed = new_phase != prev_phase and new_phase != "불명확"
     regime_changed = new_regime != prev_regime
 
-    if not level_changed and not phase_changed and not regime_changed:
+    if not any([level_changed, phase_changed, regime_changed, top3_changed, degraded]):
         logger.info(f"변화 없음 (level={new_level}, phase={new_phase}, regime={new_regime}), 알림 스킵")
         return
 
@@ -186,6 +219,12 @@ def main(
         alerts.append(build_phase_message(new_phase, prev_phase))
     if regime_changed:
         alerts.append(build_regime_message(new_regime, prev_regime, new_phase))
+    if top3_changed and new_top3:
+        alerts.append(build_momentum_top3_message(momentum_results))
+        logger.info(f"TOP 3 변경: {prev_top3} → {new_top3}")
+    for d in degraded:
+        alerts.append(build_degradation_message([d]))
+        logger.info(f"모멘텀 약화: {d[0]} {d[1]}→{d[2]}")
 
     if dry_run:
         for msg in alerts:
@@ -198,6 +237,8 @@ def main(
         "threshold_level": new_level,
         "phase": new_phase,
         "regime": new_regime,
+        "momentum_top3": new_top3,
+        "momentum_scores": new_scores,
         "last_vix": vix,
         "last_updated": datetime.now(timezone.utc).isoformat(),
     })
