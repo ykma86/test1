@@ -13,6 +13,7 @@ import yfinance as yf
 
 from classifier import classify_phase
 from fetchers import fetch_series, fetch_move_series
+from regime import classify_regime, get_position_guide, REGIME_EMOJI
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
@@ -50,9 +51,10 @@ def get_threshold_level(vix: float) -> int:
 def load_state() -> dict:
     """이전 상태 로드. 파일 없으면 기본값 반환."""
     if not STATE_FILE.exists():
-        return {"threshold_level": 0, "phase": "불명확", "last_vix": None, "last_updated": None}
+        return {"threshold_level": 0, "phase": "불명확", "regime": "불명확", "last_vix": None, "last_updated": None}
     state = json.loads(STATE_FILE.read_text())
     state.setdefault("phase", "불명확")
+    state.setdefault("regime", "불명확")
     return state
 
 
@@ -82,6 +84,34 @@ def fetch_phase_data(api_key: str) -> tuple[pd.Series, pd.Series, pd.Series, pd.
         logger.warning("단계 분류 데이터 부족 — 단계 판정 스킵")
         return None
     return cli, anfci, vix_s, move if move is not None else pd.Series(dtype=float)
+
+
+def fetch_regime_data(api_key: str, end_date: str | None = None) -> tuple[pd.Series, pd.Series] | None:
+    """체제 분류용 시리즈 fetch. 실패 시 None."""
+    cli     = fetch_series("OECDLOLITOAASTSAM", api_key, n_periods=6, end_date=end_date)
+    bei_raw = fetch_series("T5YIE",             api_key, n_periods=200, end_date=end_date)  # 일별 ~10개월
+    if cli is None or bei_raw is None:
+        logger.warning("체제 분류 데이터 부족 — 체제 판정 스킵")
+        return None
+    bei = bei_raw.resample("ME").last().iloc[-8:]  # 월별로 축소 후 8개 (6개월 비교용)
+    if len(bei) < 7:
+        logger.warning("BEI 월별 데이터 부족")
+        return None
+    return cli, bei
+
+
+def build_regime_message(new_regime: str, prev_regime: str, phase: str) -> str:
+    """체제 전환 알림 메시지 생성."""
+    e_new  = REGIME_EMOJI.get(new_regime, "⚪")
+    e_prev = REGIME_EMOJI.get(prev_regime, "⚪")
+    guide  = get_position_guide(new_regime)
+    return (
+        f"🌐 거시 체제 전환\n"
+        f"{e_prev} {prev_regime} → {e_new} {new_regime}\n"
+        f"현재 단계: {PHASE_EMOJI.get(phase, '⚪')} {phase}\n"
+        f"포지션: {guide}"
+        f"{DISCLAIMER}"
+    )
 
 
 def build_phase_message(new_phase: str, prev_phase: str) -> str:
@@ -122,10 +152,12 @@ def main(
     state = load_state()
     prev_level = state["threshold_level"]
     prev_phase = state.get("phase", "불명확")
+    prev_regime = state.get("regime", "불명확")
     new_level = get_threshold_level(vix)
 
-    # 단계 분류 (FRED key 있을 때만)
+    # 단계 + 체제 분류 (FRED key 있을 때만)
     new_phase = prev_phase
+    new_regime = prev_regime
     if fred_api_key:
         data = fetch_phase_data(fred_api_key)
         if data:
@@ -133,12 +165,17 @@ def main(
             if classified != "불명확":
                 new_phase = classified
                 logger.info(f"단계: {prev_phase} → {new_phase}")
+        regime_data = fetch_regime_data(fred_api_key)
+        if regime_data:
+            new_regime = classify_regime(*regime_data)
+            logger.info(f"체제: {prev_regime} → {new_regime}")
 
     level_changed = new_level != prev_level
     phase_changed = new_phase != prev_phase and new_phase != "불명확"
+    regime_changed = new_regime != prev_regime
 
-    if not level_changed and not phase_changed:
-        logger.info(f"변화 없음 (level={new_level}, phase={new_phase}), 알림 스킵")
+    if not level_changed and not phase_changed and not regime_changed:
+        logger.info(f"변화 없음 (level={new_level}, phase={new_phase}, regime={new_regime}), 알림 스킵")
         return
 
     alerts = []
@@ -147,6 +184,8 @@ def main(
         logger.info(f"임계치 변경: {prev_level} → {new_level}")
     if phase_changed:
         alerts.append(build_phase_message(new_phase, prev_phase))
+    if regime_changed:
+        alerts.append(build_regime_message(new_regime, prev_regime, new_phase))
 
     if dry_run:
         for msg in alerts:
@@ -158,6 +197,7 @@ def main(
     save_state({
         "threshold_level": new_level,
         "phase": new_phase,
+        "regime": new_regime,
         "last_vix": vix,
         "last_updated": datetime.now(timezone.utc).isoformat(),
     })
