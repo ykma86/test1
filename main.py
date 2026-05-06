@@ -7,8 +7,12 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+import pandas as pd
 import requests
 import yfinance as yf
+
+from classifier import classify_phase
+from fetchers import fetch_series, fetch_move_series
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
@@ -46,8 +50,10 @@ def get_threshold_level(vix: float) -> int:
 def load_state() -> dict:
     """이전 상태 로드. 파일 없으면 기본값 반환."""
     if not STATE_FILE.exists():
-        return {"threshold_level": 0, "last_vix": None, "last_updated": None}
-    return json.loads(STATE_FILE.read_text())
+        return {"threshold_level": 0, "phase": "불명확", "last_vix": None, "last_updated": None}
+    state = json.loads(STATE_FILE.read_text())
+    state.setdefault("phase", "불명확")
+    return state
 
 
 def save_state(state: dict) -> None:
@@ -63,6 +69,32 @@ def build_message(vix: float, new_level: int, prev_level: int) -> str:
     return f"📊 VIX 임계치 알림 {direction}\n현재 VIX: {vix:.2f}\n{body}{DISCLAIMER}"
 
 
+PHASE_EMOJI = {"회피": "🔴", "1단계": "🟡", "2단계": "🟢", "3단계": "🟠", "불명확": "⚪"}
+
+
+def fetch_phase_data(api_key: str) -> tuple[pd.Series, pd.Series, pd.Series, pd.Series] | None:
+    """단계 분류용 시리즈 fetch. 실패 시 None."""
+    cli   = fetch_series("OECDLOLITOAASTSAM", api_key, n_periods=6)
+    anfci = fetch_series("ANFCI",             api_key, n_periods=8)
+    vix_s = fetch_series("VIXCLS",            api_key, n_periods=40)
+    move  = fetch_move_series(n_periods=400)
+    if cli is None or anfci is None or vix_s is None:
+        logger.warning("단계 분류 데이터 부족 — 단계 판정 스킵")
+        return None
+    return cli, anfci, vix_s, move if move is not None else pd.Series(dtype=float)
+
+
+def build_phase_message(new_phase: str, prev_phase: str) -> str:
+    """단계 전환 알림 메시지 생성."""
+    e_new  = PHASE_EMOJI.get(new_phase, "⚪")
+    e_prev = PHASE_EMOJI.get(prev_phase, "⚪")
+    return (
+        f"📍 매크로 단계 전환\n"
+        f"{e_prev} {prev_phase} → {e_new} {new_phase}\n"
+        f"{DISCLAIMER}"
+    )
+
+
 def send_telegram(message: str, token: str, chat_id: str) -> None:
     """Telegram 봇으로 메시지 발송."""
     url = f"https://api.telegram.org/bot{token}/sendMessage"
@@ -71,9 +103,14 @@ def send_telegram(message: str, token: str, chat_id: str) -> None:
     logger.info("텔레그램 발송 완료")
 
 
-def main(dry_run: bool = False, token: str = "", chat_id: str = "") -> None:
-    """메인: VIX fetch → 임계치 판정 → 알림."""
-    logger.info(f"VIX 알림 실행 (dry_run={dry_run})")
+def main(
+    dry_run: bool = False,
+    token: str = "",
+    chat_id: str = "",
+    fred_api_key: str = "",
+) -> None:
+    """메인: VIX 임계치 + 매크로 단계 판정 → 알림."""
+    logger.info(f"알림 실행 (dry_run={dry_run})")
 
     try:
         vix = fetch_vix()
@@ -84,22 +121,43 @@ def main(dry_run: bool = False, token: str = "", chat_id: str = "") -> None:
     logger.info(f"VIX: {vix:.2f}")
     state = load_state()
     prev_level = state["threshold_level"]
+    prev_phase = state.get("phase", "불명확")
     new_level = get_threshold_level(vix)
 
-    if new_level == prev_level:
-        logger.info(f"임계치 변화 없음 (level={new_level}), 알림 스킵")
+    # 단계 분류 (FRED key 있을 때만)
+    new_phase = prev_phase
+    if fred_api_key:
+        data = fetch_phase_data(fred_api_key)
+        if data:
+            classified = classify_phase(*data)
+            if classified != "불명확":
+                new_phase = classified
+                logger.info(f"단계: {prev_phase} → {new_phase}")
+
+    level_changed = new_level != prev_level
+    phase_changed = new_phase != prev_phase and new_phase != "불명확"
+
+    if not level_changed and not phase_changed:
+        logger.info(f"변화 없음 (level={new_level}, phase={new_phase}), 알림 스킵")
         return
 
-    message = build_message(vix, new_level, prev_level)
-    logger.info(f"임계치 변경: {prev_level} → {new_level}")
+    alerts = []
+    if level_changed:
+        alerts.append(build_message(vix, new_level, prev_level))
+        logger.info(f"임계치 변경: {prev_level} → {new_level}")
+    if phase_changed:
+        alerts.append(build_phase_message(new_phase, prev_phase))
 
     if dry_run:
-        logger.info(f"[DRY-RUN] 발송 예정 메시지:\n{message}")
+        for msg in alerts:
+            logger.info(f"[DRY-RUN] 발송 예정:\n{msg}")
         return
 
-    send_telegram(message, token, chat_id)
+    for msg in alerts:
+        send_telegram(msg, token, chat_id)
     save_state({
         "threshold_level": new_level,
+        "phase": new_phase,
         "last_vix": vix,
         "last_updated": datetime.now(timezone.utc).isoformat(),
     })
@@ -110,11 +168,12 @@ if __name__ == "__main__":
     parser.add_argument("--dry-run", action="store_true", help="알림/저장 없이 테스트 실행")
     args = parser.parse_args()
 
-    _token = os.environ.get("TELEGRAM_TEST_BOT_TOKEN", "")
-    _chat_id = os.environ.get("TELEGRAM_TEST_CHAT_ID", "")
+    _token    = os.environ.get("TELEGRAM_TEST_BOT_TOKEN", "")
+    _chat_id  = os.environ.get("TELEGRAM_TEST_CHAT_ID", "")
+    _fred_key = os.environ.get("FRED_API_KEY", "")
 
     if not args.dry_run and (not _token or not _chat_id):
         logger.error("환경변수 필요: TELEGRAM_TEST_BOT_TOKEN, TELEGRAM_TEST_CHAT_ID")
         sys.exit(1)
 
-    main(dry_run=args.dry_run, token=_token, chat_id=_chat_id)
+    main(dry_run=args.dry_run, token=_token, chat_id=_chat_id, fred_api_key=_fred_key)

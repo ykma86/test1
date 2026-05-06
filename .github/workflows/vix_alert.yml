@@ -1,4 +1,4 @@
-name: VIX Alert (Phase 0)
+name: VIX + 매크로 단계 알림 (Phase 2)
 
 on:
   schedule:
@@ -26,6 +26,7 @@ jobs:
         env:
           TELEGRAM_TEST_BOT_TOKEN: ${{ secrets.TELEGRAM_TEST_BOT_TOKEN }}
           TELEGRAM_TEST_CHAT_ID: ${{ secrets.TELEGRAM_TEST_CHAT_ID }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: python main.py
 
       - name: Commit updated state
