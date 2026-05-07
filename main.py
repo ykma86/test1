@@ -12,6 +12,7 @@ import requests
 import yfinance as yf
 
 from classifier import classify_phase
+from falling_knife import evaluate as fk_evaluate, fetch_data as fk_fetch, build_alert_message as fk_alert, build_clear_message as fk_clear
 from fetchers import fetch_series, fetch_move_series
 from momentum import scan_all
 from regime import classify_regime, get_position_guide, REGIME_EMOJI
@@ -58,6 +59,7 @@ def load_state() -> dict:
     state.setdefault("regime", "불명확")
     state.setdefault("momentum_top3", [])
     state.setdefault("momentum_scores", {})
+    state.setdefault("falling_knife_active", False)
     return state
 
 
@@ -203,11 +205,27 @@ def main(
         if prev_scores.get(t, 0) >= 5 and new_scores[t] <= 3
     ]
 
+    # 떨어지는 칼날 체크
+    import yaml
+    fk_enabled = yaml.safe_load(Path("config/thresholds.yaml").read_text()).get("falling_knife_mode", True)
+    prev_fk_active = state.get("falling_knife_active", False)
+    new_fk_active = False
+    fk_triggers = {}
+    if fk_enabled:
+        fk_data = fk_fetch()
+        if fk_data:
+            spy_s, vix_s = fk_data
+            hy_s = fetch_series("BAMLH0A0HYM2", fred_api_key, n_periods=10) if fred_api_key else None
+            fk_triggers = fk_evaluate(spy_s, vix_s, hy_s if hy_s is not None else pd.Series(dtype=float))
+            new_fk_active = bool(fk_triggers.get("active", False))
+    fk_activated = new_fk_active and not prev_fk_active
+    fk_cleared   = not new_fk_active and prev_fk_active
+
     level_changed = new_level != prev_level
     phase_changed = new_phase != prev_phase and new_phase != "불명확"
     regime_changed = new_regime != prev_regime
 
-    if not any([level_changed, phase_changed, regime_changed, top3_changed, degraded]):
+    if not any([level_changed, phase_changed, regime_changed, top3_changed, degraded, fk_activated, fk_cleared]):
         logger.info(f"변화 없음 (level={new_level}, phase={new_phase}, regime={new_regime}), 알림 스킵")
         return
 
@@ -225,6 +243,16 @@ def main(
     for d in degraded:
         alerts.append(build_degradation_message([d]))
         logger.info(f"모멘텀 약화: {d[0]} {d[1]}→{d[2]}")
+    if fk_activated:
+        sqqq_score = new_scores.get("SQQQ", 0)
+        if sqqq_score >= 5:
+            alerts.append(fk_alert(fk_triggers, sqqq_score))
+            logger.info(f"떨어지는 칼날 진입 (SQQQ {sqqq_score}/7)")
+        else:
+            logger.info(f"떨어지는 칼날 트리거됐으나 SQQQ 점수 부족 ({sqqq_score}/7 < 5)")
+    if fk_cleared:
+        alerts.append(fk_clear())
+        logger.info("떨어지는 칼날 해제")
 
     if dry_run:
         for msg in alerts:
@@ -239,6 +267,7 @@ def main(
         "regime": new_regime,
         "momentum_top3": new_top3,
         "momentum_scores": new_scores,
+        "falling_knife_active": new_fk_active,
         "last_vix": vix,
         "last_updated": datetime.now(timezone.utc).isoformat(),
     })
