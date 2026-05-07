@@ -66,17 +66,34 @@ class TestFetchMove:
 
 
 class TestFetchAll:
-    def test_returns_12_indicators(self):
+    _ext_patches = dict(
+        fetch_ism_pmi=52.0, fetch_nfp_change=250.0, fetch_fed_balance=7.2,
+        fetch_m2_yoy=3.1,   fetch_wti=78.5,         fetch_copper=4.2,
+    )
+
+    def test_returns_18_indicators(self):
         with patch("fetchers.fetch_fred", return_value=1.0), \
              patch("fetchers.fetch_cpi_yoy", return_value=3.0), \
-             patch("fetchers.fetch_move", return_value=120.0):
+             patch("fetchers.fetch_move", return_value=120.0), \
+             patch("fetchers.fetch_ism_pmi", return_value=52.0), \
+             patch("fetchers.fetch_nfp_change", return_value=250.0), \
+             patch("fetchers.fetch_fed_balance", return_value=7.2), \
+             patch("fetchers.fetch_m2_yoy", return_value=3.1), \
+             patch("fetchers.fetch_wti", return_value=78.5), \
+             patch("fetchers.fetch_copper", return_value=4.2):
             result = fetch_all("key")
-        assert len(result) == 12
+        assert len(result) == 18
 
     def test_all_none_on_full_failure(self):
         with patch("fetchers.fetch_fred", return_value=None), \
              patch("fetchers.fetch_cpi_yoy", return_value=None), \
-             patch("fetchers.fetch_move", return_value=None):
+             patch("fetchers.fetch_move", return_value=None), \
+             patch("fetchers.fetch_ism_pmi", return_value=None), \
+             patch("fetchers.fetch_nfp_change", return_value=None), \
+             patch("fetchers.fetch_fed_balance", return_value=None), \
+             patch("fetchers.fetch_m2_yoy", return_value=None), \
+             patch("fetchers.fetch_wti", return_value=None), \
+             patch("fetchers.fetch_copper", return_value=None):
             result = fetch_all("key")
         assert all(v is None for v in result.values())
 

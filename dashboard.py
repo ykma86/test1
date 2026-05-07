@@ -14,7 +14,11 @@ from fetchers import fetch_all, fetch_series, fetch_move_series
 from momentum import scan_all
 from regime import REGIME_EMOJI, classify_regime, get_position_guide
 
-FRED_KEY = st.secrets.get("FRED_API_KEY", os.environ.get("FRED_API_KEY", ""))
+try:
+    FRED_KEY = st.secrets.get("FRED_API_KEY", "")
+except Exception:
+    FRED_KEY = ""
+FRED_KEY = FRED_KEY or os.environ.get("FRED_API_KEY", "")
 STATE_FILE = Path("state/previous_state.json")
 
 PHASE_EMOJI = {"회피": "🔴", "1단계": "🟡", "2단계": "🟢", "3단계": "🟠", "불명확": "⚪"}
@@ -114,6 +118,21 @@ for i, (key, label) in enumerate(INDICATOR_LABELS.items()):
     val = indicators.get(key)
     display = f"{val:.2f}" if val is not None else "N/A"
     cols[i % 6].metric(label, display)
+
+st.subheader("확장 지표")
+EXTENDED_DISPLAY: dict[str, tuple[str, object]] = {
+    "ism_pmi": ("ISM PMI",      lambda v: f"{v:.1f}"),
+    "nfp_chg": ("NFP 변화(K)",  lambda v: f"{v:+,.0f}K"),
+    "fed_bs":  ("Fed BS(조$)",  lambda v: f"${v:.1f}T"),
+    "m2_yoy":  ("M2 YoY",       lambda v: f"{v:+.1f}%"),
+    "wti":     ("WTI($)",        lambda v: f"${v:.0f}"),
+    "copper":  ("구리($/lb)",    lambda v: f"${v:.2f}"),
+}
+ext_cols = st.columns(6)
+for i, (key, (label, fmt)) in enumerate(EXTENDED_DISPLAY.items()):
+    val = indicators.get(key)
+    display = fmt(val) if val is not None else "N/A"
+    ext_cols[i].metric(label, display)
 
 st.divider()
 

@@ -113,20 +113,93 @@ def fetch_move_series(
         return None
 
 
+def fetch_ism_pmi(api_key: str) -> Optional[float]:
+    """ISM 제조업 PMI (NAPM). 50 기준 확장/수축."""
+    return fetch_fred("NAPM", api_key)
+
+
+def fetch_nfp_change(api_key: str) -> Optional[float]:
+    """비농업 고용 전월비 변화 (단위: 천명)."""
+    try:
+        data = Fred(api_key=api_key).get_series("PAYEMS").dropna()
+        if len(data) < 2:
+            return None
+        return round(float(data.iloc[-1] - data.iloc[-2]), 0)
+    except Exception as e:
+        logger.warning(f"NFP fetch 실패: {e}")
+        return None
+
+
+def fetch_fed_balance(api_key: str) -> Optional[float]:
+    """Fed 대차대조표 규모 (단위: 조 달러)."""
+    try:
+        data = Fred(api_key=api_key).get_series("WALCL").dropna()
+        if data.empty:
+            return None
+        return round(float(data.iloc[-1]) / 1_000_000, 2)  # millions → trillions
+    except Exception as e:
+        logger.warning(f"Fed 대차대조표 fetch 실패: {e}")
+        return None
+
+
+def fetch_m2_yoy(api_key: str) -> Optional[float]:
+    """M2 통화량 전년비 증가율 (%)."""
+    try:
+        data = Fred(api_key=api_key).get_series("M2SL").dropna()
+        if len(data) < 13:
+            return None
+        return round(float(data.iloc[-1] / data.iloc[-13] - 1) * 100, 2)
+    except Exception as e:
+        logger.warning(f"M2 YoY fetch 실패: {e}")
+        return None
+
+
+def fetch_wti() -> Optional[float]:
+    """WTI 원유 선물 현재가 (USD/배럴)."""
+    try:
+        data = yf.Ticker("CL=F").history(period="5d")
+        if data.empty:
+            return None
+        return float(data["Close"].dropna().iloc[-1])
+    except Exception as e:
+        logger.warning(f"WTI fetch 실패: {e}")
+        return None
+
+
+def fetch_copper() -> Optional[float]:
+    """구리 선물 현재가 (USD/파운드)."""
+    try:
+        data = yf.Ticker("HG=F").history(period="5d")
+        if data.empty:
+            return None
+        return float(data["Close"].dropna().iloc[-1])
+    except Exception as e:
+        logger.warning(f"구리 fetch 실패: {e}")
+        return None
+
+
 def fetch_all(api_key: str) -> dict[str, Optional[float]]:
-    """12개 지표 전체 fetch. 실패 지표는 None."""
+    """12개 핵심 + 6개 확장 지표 fetch. 실패 지표는 None."""
     results: dict[str, Optional[float]] = {}
 
     for name, series_id in FRED_SERIES.items():
         results[name] = fetch_fred(series_id, api_key)
 
     results["cpi_yoy"] = fetch_cpi_yoy(api_key)
-    results["move"] = fetch_move()
+    results["move"]    = fetch_move()
+
+    # 확장 지표
+    results["ism_pmi"] = fetch_ism_pmi(api_key)
+    results["nfp_chg"] = fetch_nfp_change(api_key)
+    results["fed_bs"]  = fetch_fed_balance(api_key)
+    results["m2_yoy"]  = fetch_m2_yoy(api_key)
+    results["wti"]     = fetch_wti()
+    results["copper"]  = fetch_copper()
 
     failed = [k for k, v in results.items() if v is None]
     if failed:
         logger.warning(f"fetch 실패 지표: {failed}")
     else:
-        logger.info("12개 지표 전체 fetch 완료")
+        logger.info("18개 지표 전체 fetch 완료")
 
     return results
