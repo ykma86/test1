@@ -19,7 +19,7 @@ from falling_knife import (
     build_alert_message as fk_alert,
     build_clear_message as fk_clear,
 )
-from fetchers import fetch_series, fetch_move_series, fetch_fred
+from fetchers import fetch_series, fetch_move_series, fetch_fred, fetch_ism_pmi
 from momentum import scan_all
 from regime import classify_regime, get_position_guide, REGIME_EMOJI
 
@@ -77,6 +77,8 @@ def load_state() -> dict:
     state.setdefault("momentum_scores", {})
     state.setdefault("falling_knife_active", False)
     state.setdefault("fx_level", "normal")
+    state.setdefault("ism_level", "unknown")
+    state.setdefault("fed_bs_trend", "unknown")
     return state
 
 
@@ -236,6 +238,63 @@ def _is_quiet_hours(
     return quiet_start <= _now.hour < quiet_end
 
 
+# ── Option B: ISM PMI + Fed BS 알림 ──────────────────────────────
+
+def get_ism_level(ism_pmi: float | None) -> str:
+    """ISM PMI 값으로 레벨 반환 (above/below/unknown)."""
+    if ism_pmi is None:
+        return "unknown"
+    return "above" if ism_pmi > 50 else "below"
+
+
+def check_ism_threshold(ism_pmi: float | None, prev_level: str) -> tuple[str | None, str]:
+    """ISM 50선 크로스 체크. (알림메시지|None, 새레벨) 반환."""
+    new_level = get_ism_level(ism_pmi)
+    if new_level == "unknown" or new_level == prev_level:
+        return None, prev_level
+    return _build_ism_message(ism_pmi, new_level), new_level  # type: ignore[arg-type]
+
+
+def _build_ism_message(ism_pmi: float, new_level: str) -> str:
+    """ISM PMI 50선 전환 알림 메시지."""
+    if new_level == "above":
+        body = f"ISM PMI {ism_pmi:.1f} — 50선 상향 돌파 (제조업 확장 전환)"
+        emoji = "🟢"
+    else:
+        body = f"ISM PMI {ism_pmi:.1f} — 50선 하향 이탈 (제조업 수축 전환)"
+        emoji = "🔴"
+    return f"{emoji} ISM PMI 50선 전환\n{body}{DISCLAIMER}"
+
+
+def get_fed_bs_trend(walcl: pd.Series | None) -> str:
+    """WALCL 8주 시계열로 추세 반환 (expanding/contracting/unknown)."""
+    if walcl is None or len(walcl) < 8:
+        return "unknown"
+    first_half  = float(walcl.iloc[:4].mean())
+    second_half = float(walcl.iloc[4:].mean())
+    return "expanding" if second_half > first_half else "contracting"
+
+
+def check_fed_bs_trend(walcl: pd.Series | None, prev_trend: str) -> tuple[str | None, str]:
+    """Fed BS 방향 전환 체크. (알림메시지|None, 새추세) 반환."""
+    new_trend = get_fed_bs_trend(walcl)
+    if new_trend == "unknown" or new_trend == prev_trend:
+        return None, prev_trend
+    latest_trillions = float(walcl.iloc[-1]) / 1_000_000  # type: ignore[union-attr]
+    return _build_fed_bs_message(latest_trillions, new_trend), new_trend
+
+
+def _build_fed_bs_message(trillions: float, new_trend: str) -> str:
+    """Fed 대차대조표 방향 전환 알림 메시지."""
+    if new_trend == "expanding":
+        body = f"Fed BS ${trillions:.1f}T — 수축→확장 전환 (QT→QE 가능성)"
+        emoji = "🟢"
+    else:
+        body = f"Fed BS ${trillions:.1f}T — 확장→수축 전환 (QE→QT 가능성)"
+        emoji = "🔴"
+    return f"{emoji} Fed 대차대조표 방향 전환\n{body}{DISCLAIMER}"
+
+
 # ─────────────────────────────────────────────────────────────────
 
 def send_telegram(message: str, token: str, chat_id: str) -> None:
@@ -268,7 +327,9 @@ def main(
     prev_level    = state["threshold_level"]
     prev_phase    = state.get("phase", "불명확")
     prev_regime   = state.get("regime", "불명확")
-    prev_fx_level = state.get("fx_level", "normal")
+    prev_fx_level   = state.get("fx_level", "normal")
+    prev_ism_level  = state.get("ism_level", "unknown")
+    prev_fed_trend  = state.get("fed_bs_trend", "unknown")
     new_level = get_threshold_level(vix)
 
     cfg = yaml.safe_load(Path("config/thresholds.yaml").read_text(encoding="utf-8"))
@@ -323,13 +384,24 @@ def main(
     fx_msg, new_fx_level = check_fx_threshold(usdkrw, prev_fx_level)
     fx_changed = fx_msg is not None
 
+    # ISM PMI 50선 체크
+    ism_pmi_val = fetch_ism_pmi(fred_api_key) if fred_api_key else None
+    ism_msg, new_ism_level = check_ism_threshold(ism_pmi_val, prev_ism_level)
+    ism_changed = ism_msg is not None
+
+    # Fed BS 방향 전환 체크
+    walcl_series = fetch_series("WALCL", fred_api_key, n_periods=8) if fred_api_key else None
+    fed_msg, new_fed_trend = check_fed_bs_trend(walcl_series, prev_fed_trend)
+    fed_changed = fed_msg is not None
+
     level_changed  = new_level  != prev_level
     phase_changed  = new_phase  != prev_phase  and new_phase  != "불명확"
     regime_changed = new_regime != prev_regime
 
     has_change = any([
         level_changed, phase_changed, regime_changed,
-        top3_changed, degraded, fk_activated, fk_cleared, fx_changed,
+        top3_changed, degraded, fk_activated, fk_cleared,
+        fx_changed, ism_changed, fed_changed,
     ])
 
     if not has_change and not daily and not shadow:
@@ -341,6 +413,12 @@ def main(
     if fx_changed and fx_msg:
         alerts.append(fx_msg)
         logger.info(f"환율 레벨 변경: {prev_fx_level} → {new_fx_level}")
+    if ism_changed and ism_msg:
+        alerts.append(ism_msg)
+        logger.info(f"ISM PMI 50선 전환: {prev_ism_level} → {new_ism_level}")
+    if fed_changed and fed_msg:
+        alerts.append(fed_msg)
+        logger.info(f"Fed BS 방향 전환: {prev_fed_trend} → {new_fed_trend}")
     if level_changed:
         alerts.append(build_message(vix, new_level, prev_level))
         logger.info(f"임계치 변경: {prev_level} → {new_level}")
@@ -386,6 +464,8 @@ def main(
             "momentum_scores":    new_scores,
             "falling_knife_active": new_fk_active,
             "fx_level":           new_fx_level,
+            "ism_level":          new_ism_level,
+            "fed_bs_trend":       new_fed_trend,
             "last_vix":           vix,
             "last_updated":       datetime.now(timezone.utc).isoformat(),
         })
@@ -405,6 +485,8 @@ def main(
                 "momentum_scores": new_scores,
                 "falling_knife_active": new_fk_active,
                 "fx_level": new_fx_level,
+                "ism_level": new_ism_level,
+                "fed_bs_trend": new_fed_trend,
                 "last_vix": vix,
                 "last_updated": datetime.now(timezone.utc).isoformat(),
             })
@@ -429,6 +511,8 @@ def main(
         "momentum_scores": new_scores,
         "falling_knife_active": new_fk_active,
         "fx_level": new_fx_level,
+        "ism_level": new_ism_level,
+        "fed_bs_trend": new_fed_trend,
         "last_vix": vix,
         "last_updated": datetime.now(timezone.utc).isoformat(),
     })
