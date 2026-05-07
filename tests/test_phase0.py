@@ -82,7 +82,8 @@ class TestDuplicateAlertPrevention:
     @patch("main.load_state", return_value=_base_state)
     @patch("main.send_telegram")
     @patch("main.save_state")
-    def test_alert_fires_on_level_change(self, mock_save, mock_send, mock_load, mock_fetch, mock_scan):
+    @patch("main._is_quiet_hours", return_value=False)
+    def test_alert_fires_on_level_change(self, mock_quiet, mock_save, mock_send, mock_load, mock_fetch, mock_scan):
         main(token="tok", chat_id="123")
         mock_send.assert_called_once()
         mock_save.assert_called_once()

@@ -11,3 +11,5 @@ hy_spread:
   weekly_warning_bps: 50
 
 falling_knife_mode: true
+
+quiet_hours: [0, 7]
