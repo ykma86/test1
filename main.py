@@ -26,7 +26,8 @@ from regime import classify_regime, get_position_guide, REGIME_EMOJI
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
 
-STATE_FILE = Path("state/previous_state.json")
+STATE_FILE  = Path("state/previous_state.json")
+SHADOW_LOG  = Path("state/shadow_log.jsonl")
 DISCLAIMER = "\n⚠️ 본 시스템은 정보 제공 도구이며 투자 자문이 아닙니다."
 
 THRESHOLD_MESSAGES = {
@@ -83,6 +84,13 @@ def save_state(state: dict) -> None:
     """상태 파일 저장."""
     STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
     STATE_FILE.write_text(json.dumps(state, indent=2, ensure_ascii=False))
+
+
+def append_shadow_log(entry: dict) -> None:
+    """Shadow 모드 실행 로그를 JSONL 파일에 추가."""
+    SHADOW_LOG.parent.mkdir(parents=True, exist_ok=True)
+    with SHADOW_LOG.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
 
 def build_message(vix: float, new_level: int, prev_level: int) -> str:
@@ -244,9 +252,10 @@ def main(
     chat_id: str = "",
     fred_api_key: str = "",
     daily: bool = False,
+    shadow: bool = False,
 ) -> None:
     """메인: VIX 임계치 + 매크로 단계 판정 → 알림."""
-    logger.info(f"알림 실행 (dry_run={dry_run}, daily={daily})")
+    logger.info(f"알림 실행 (dry_run={dry_run}, daily={daily}, shadow={shadow})")
 
     try:
         vix = fetch_vix()
@@ -323,7 +332,7 @@ def main(
         top3_changed, degraded, fk_activated, fk_cleared, fx_changed,
     ])
 
-    if not has_change and not daily:
+    if not has_change and not daily and not shadow:
         logger.info(f"변화 없음 (level={new_level}, phase={new_phase}, regime={new_regime}), 알림 스킵")
         return
 
@@ -357,6 +366,31 @@ def main(
         logger.info("떨어지는 칼날 해제")
     if daily:
         alerts.append(build_daily_summary(vix, new_phase, new_regime, usdkrw, momentum_results))
+
+    # Shadow 모드: 로그 기록 + 상태 저장, 발송 없음
+    if shadow:
+        kst_now = datetime.now(timezone(timedelta(hours=9)))
+        append_shadow_log({
+            "ts":          kst_now.isoformat(),
+            "vix":         round(vix, 2),
+            "phase":       new_phase,
+            "regime":      new_regime,
+            "alert_count": len(alerts),
+            "error":       None,
+        })
+        save_state({
+            "threshold_level":    new_level,
+            "phase":              new_phase,
+            "regime":             new_regime,
+            "momentum_top3":      new_top3,
+            "momentum_scores":    new_scores,
+            "falling_knife_active": new_fk_active,
+            "fx_level":           new_fx_level,
+            "last_vix":           vix,
+            "last_updated":       datetime.now(timezone.utc).isoformat(),
+        })
+        logger.info(f"[SHADOW] 기록 완료 — {len(alerts)}개 알림 (발송 안 함)")
+        return
 
     # Quiet hours: 긴급 아닌 알림 억제 (KST quiet_start~quiet_end)
     urgent = new_level >= 30 or fk_activated
@@ -404,6 +438,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="VIX 임계치 알림 (Phase 0 MVP)")
     parser.add_argument("--dry-run", action="store_true", help="알림/저장 없이 테스트 실행")
     parser.add_argument("--daily",   action="store_true", help="일일 요약 발송 (변화 없어도)")
+    parser.add_argument("--shadow",  action="store_true", help="Shadow 모드: 발송 없이 로그만 기록")
     args = parser.parse_args()
 
     _token    = os.environ.get("TELEGRAM_TEST_BOT_TOKEN", "")
@@ -414,4 +449,4 @@ if __name__ == "__main__":
         logger.error("환경변수 필요: TELEGRAM_TEST_BOT_TOKEN, TELEGRAM_TEST_CHAT_ID")
         sys.exit(1)
 
-    main(dry_run=args.dry_run, token=_token, chat_id=_chat_id, fred_api_key=_fred_key, daily=args.daily)
+    main(dry_run=args.dry_run, token=_token, chat_id=_chat_id, fred_api_key=_fred_key, daily=args.daily, shadow=args.shadow)
