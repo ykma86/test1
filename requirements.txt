@@ -4,3 +4,6 @@ pytest>=7.0
 pytest-mock>=3.0
 fredapi>=0.5.0
 pyyaml>=6.0
+streamlit>=1.35.0
+plotly>=5.22.0
+pandas>=2.0.0
