@@ -121,14 +121,16 @@ for i, (key, label) in enumerate(INDICATOR_LABELS.items()):
 
 st.subheader("확장 지표")
 EXTENDED_DISPLAY: dict[str, tuple[str, object]] = {
-    "ism_pmi": ("ISM PMI",      lambda v: f"{v:.1f}"),
-    "nfp_chg": ("NFP 변화(K)",  lambda v: f"{v:+,.0f}K"),
-    "fed_bs":  ("Fed BS(조$)",  lambda v: f"${v:.1f}T"),
-    "m2_yoy":  ("M2 YoY",       lambda v: f"{v:+.1f}%"),
-    "wti":     ("WTI($)",        lambda v: f"${v:.0f}"),
-    "copper":  ("구리($/lb)",    lambda v: f"${v:.2f}"),
+    "ism_pmi":    ("ISM PMI",      lambda v: f"{v:.1f}"),
+    "nfp_chg":    ("NFP 변화(K)",  lambda v: f"{v:+,.0f}K"),
+    "fed_bs":     ("Fed BS(조$)",  lambda v: f"${v:.1f}T"),
+    "m2_yoy":     ("M2 YoY",       lambda v: f"{v:+.1f}%"),
+    "wti":        ("WTI($)",        lambda v: f"${v:.0f}"),
+    "copper":     ("구리($/lb)",    lambda v: f"${v:.2f}"),
+    "pc_ratio":   ("P/C Ratio",    lambda v: f"{v:.2f}"),
+    "fear_greed": ("Fear & Greed", lambda v: f"{v:.0f}"),
 }
-ext_cols = st.columns(6)
+ext_cols = st.columns(8)
 for i, (key, (label, fmt)) in enumerate(EXTENDED_DISPLAY.items()):
     val = indicators.get(key)
     display = fmt(val) if val is not None else "N/A"

@@ -71,7 +71,7 @@ class TestFetchAll:
         fetch_m2_yoy=3.1,   fetch_wti=78.5,         fetch_copper=4.2,
     )
 
-    def test_returns_18_indicators(self):
+    def test_returns_20_indicators(self):
         with patch("fetchers.fetch_fred", return_value=1.0), \
              patch("fetchers.fetch_cpi_yoy", return_value=3.0), \
              patch("fetchers.fetch_move", return_value=120.0), \
@@ -80,9 +80,11 @@ class TestFetchAll:
              patch("fetchers.fetch_fed_balance", return_value=7.2), \
              patch("fetchers.fetch_m2_yoy", return_value=3.1), \
              patch("fetchers.fetch_wti", return_value=78.5), \
-             patch("fetchers.fetch_copper", return_value=4.2):
+             patch("fetchers.fetch_copper", return_value=4.2), \
+             patch("fetchers.fetch_put_call_ratio", return_value=0.85), \
+             patch("fetchers.fetch_fear_greed", return_value=45.0):
             result = fetch_all("key")
-        assert len(result) == 18
+        assert len(result) == 20
 
     def test_all_none_on_full_failure(self):
         with patch("fetchers.fetch_fred", return_value=None), \
@@ -93,14 +95,18 @@ class TestFetchAll:
              patch("fetchers.fetch_fed_balance", return_value=None), \
              patch("fetchers.fetch_m2_yoy", return_value=None), \
              patch("fetchers.fetch_wti", return_value=None), \
-             patch("fetchers.fetch_copper", return_value=None):
+             patch("fetchers.fetch_copper", return_value=None), \
+             patch("fetchers.fetch_put_call_ratio", return_value=None), \
+             patch("fetchers.fetch_fear_greed", return_value=None):
             result = fetch_all("key")
         assert all(v is None for v in result.values())
 
     def test_expected_keys_present(self):
         with patch("fetchers.fetch_fred", return_value=1.0), \
              patch("fetchers.fetch_cpi_yoy", return_value=3.0), \
-             patch("fetchers.fetch_move", return_value=120.0):
+             patch("fetchers.fetch_move", return_value=120.0), \
+             patch("fetchers.fetch_put_call_ratio", return_value=None), \
+             patch("fetchers.fetch_fear_greed", return_value=None):
             result = fetch_all("key")
         for key in ["cli", "anfci", "nfci", "vix_fred", "hy_spread",
                     "t10y2y", "t10y3m", "dxy", "usdkrw", "bei_5y",

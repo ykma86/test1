@@ -19,7 +19,7 @@ from falling_knife import (
     build_alert_message as fk_alert,
     build_clear_message as fk_clear,
 )
-from fetchers import fetch_series, fetch_move_series, fetch_fred, fetch_ism_pmi
+from fetchers import fetch_series, fetch_move_series, fetch_fred, fetch_ism_pmi, fetch_put_call_ratio, fetch_fear_greed
 from momentum import scan_all
 from regime import classify_regime, get_position_guide, REGIME_EMOJI
 
@@ -79,6 +79,8 @@ def load_state() -> dict:
     state.setdefault("fx_level", "normal")
     state.setdefault("ism_level", "unknown")
     state.setdefault("fed_bs_trend", "unknown")
+    state.setdefault("pc_level", "unknown")
+    state.setdefault("fg_zone", "unknown")
     return state
 
 
@@ -295,6 +297,79 @@ def _build_fed_bs_message(trillions: float, new_trend: str) -> str:
     return f"{emoji} Fed 대차대조표 방향 전환\n{body}{DISCLAIMER}"
 
 
+# ── Option C: Put/Call Ratio 알림 ────────────────────────────────
+
+def get_pc_level(pc_ratio: float | None) -> str:
+    """P/C Ratio 값으로 레벨 반환 (put_dominant/neutral/call_dominant/unknown)."""
+    if pc_ratio is None:
+        return "unknown"
+    if pc_ratio > 1.0:
+        return "put_dominant"
+    if pc_ratio < 0.7:
+        return "call_dominant"
+    return "neutral"
+
+
+def check_pc_threshold(pc_ratio: float | None, prev_level: str) -> tuple[str | None, str]:
+    """P/C Ratio 레벨 전환 체크. (알림메시지|None, 새레벨) 반환."""
+    new_level = get_pc_level(pc_ratio)
+    if new_level == "unknown" or new_level == prev_level:
+        return None, prev_level
+    return _build_pc_message(pc_ratio, new_level), new_level  # type: ignore[arg-type]
+
+
+def _build_pc_message(pc_ratio: float, new_level: str) -> str:
+    """P/C Ratio 레벨 전환 알림 메시지."""
+    if new_level == "put_dominant":
+        body = f"Put/Call Ratio {pc_ratio:.2f} (1.0 상향) — 풋 우세, 시장 공포 신호"
+        emoji = "🔴"
+    elif new_level == "call_dominant":
+        body = f"Put/Call Ratio {pc_ratio:.2f} (0.7 하향) — 콜 우세, 과도한 낙관 신호"
+        emoji = "🟡"
+    else:
+        body = f"Put/Call Ratio {pc_ratio:.2f} — 중립 구간 복귀 (0.7~1.0)"
+        emoji = "🟢"
+    return f"{emoji} Put/Call Ratio 알림\n{body}{DISCLAIMER}"
+
+
+# ── Option D: Fear & Greed Index 알림 ────────────────────────────
+
+def get_fg_zone(score: float | None) -> str:
+    """Fear & Greed 점수로 구간 반환 (extreme_fear/fear/neutral/greed/extreme_greed/unknown)."""
+    if score is None:
+        return "unknown"
+    if score <= 25:
+        return "extreme_fear"
+    if score <= 45:
+        return "fear"
+    if score <= 55:
+        return "neutral"
+    if score <= 75:
+        return "greed"
+    return "extreme_greed"
+
+
+def check_fg_threshold(score: float | None, prev_zone: str) -> tuple[str | None, str]:
+    """Fear & Greed 구간 전환 체크. (알림메시지|None, 새구간) 반환."""
+    new_zone = get_fg_zone(score)
+    if new_zone == "unknown" or new_zone == prev_zone:
+        return None, prev_zone
+    return _build_fg_message(score, new_zone), new_zone  # type: ignore[arg-type]
+
+
+def _build_fg_message(score: float, new_zone: str) -> str:
+    """Fear & Greed 구간 전환 알림 메시지."""
+    zone_map = {
+        "extreme_fear":  ("🔴 극단적 공포", "역발상 매수 탐색 구간"),
+        "fear":          ("🟠 공포",         "경계 강화 구간"),
+        "neutral":       ("⚪ 중립",          "관망 구간"),
+        "greed":         ("🟡 탐욕",          "비중 축소 검토"),
+        "extreme_greed": ("🔴 극단적 탐욕",   "과열 경고 — 익절 검토"),
+    }
+    label, guide = zone_map.get(new_zone, ("⚪", ""))
+    return f"😱 CNN Fear & Greed 구간 전환\n{label} (점수: {score:.0f})\n{guide}{DISCLAIMER}"
+
+
 # ─────────────────────────────────────────────────────────────────
 
 def send_telegram(message: str, token: str, chat_id: str) -> None:
@@ -330,6 +405,8 @@ def main(
     prev_fx_level   = state.get("fx_level", "normal")
     prev_ism_level  = state.get("ism_level", "unknown")
     prev_fed_trend  = state.get("fed_bs_trend", "unknown")
+    prev_pc_level   = state.get("pc_level", "unknown")
+    prev_fg_zone    = state.get("fg_zone", "unknown")
     new_level = get_threshold_level(vix)
 
     cfg = yaml.safe_load(Path("config/thresholds.yaml").read_text(encoding="utf-8"))
@@ -394,6 +471,16 @@ def main(
     fed_msg, new_fed_trend = check_fed_bs_trend(walcl_series, prev_fed_trend)
     fed_changed = fed_msg is not None
 
+    # P/C Ratio 체크 (항상 fetch)
+    pc_ratio = fetch_put_call_ratio()
+    pc_msg, new_pc_level = check_pc_threshold(pc_ratio, prev_pc_level)
+    pc_changed = pc_msg is not None
+
+    # Fear & Greed 체크 (항상 fetch)
+    fg_score = fetch_fear_greed()
+    fg_msg, new_fg_zone = check_fg_threshold(fg_score, prev_fg_zone)
+    fg_changed = fg_msg is not None
+
     level_changed  = new_level  != prev_level
     phase_changed  = new_phase  != prev_phase  and new_phase  != "불명확"
     regime_changed = new_regime != prev_regime
@@ -401,7 +488,7 @@ def main(
     has_change = any([
         level_changed, phase_changed, regime_changed,
         top3_changed, degraded, fk_activated, fk_cleared,
-        fx_changed, ism_changed, fed_changed,
+        fx_changed, ism_changed, fed_changed, pc_changed, fg_changed,
     ])
 
     if not has_change and not daily and not shadow:
@@ -419,6 +506,12 @@ def main(
     if fed_changed and fed_msg:
         alerts.append(fed_msg)
         logger.info(f"Fed BS 방향 전환: {prev_fed_trend} → {new_fed_trend}")
+    if pc_changed and pc_msg:
+        alerts.append(pc_msg)
+        logger.info(f"P/C Ratio 레벨 변경: {prev_pc_level} → {new_pc_level}")
+    if fg_changed and fg_msg:
+        alerts.append(fg_msg)
+        logger.info(f"Fear & Greed 구간 변경: {prev_fg_zone} → {new_fg_zone}")
     if level_changed:
         alerts.append(build_message(vix, new_level, prev_level))
         logger.info(f"임계치 변경: {prev_level} → {new_level}")
@@ -466,6 +559,8 @@ def main(
             "fx_level":           new_fx_level,
             "ism_level":          new_ism_level,
             "fed_bs_trend":       new_fed_trend,
+            "pc_level":           new_pc_level,
+            "fg_zone":            new_fg_zone,
             "last_vix":           vix,
             "last_updated":       datetime.now(timezone.utc).isoformat(),
         })
@@ -487,6 +582,8 @@ def main(
                 "fx_level": new_fx_level,
                 "ism_level": new_ism_level,
                 "fed_bs_trend": new_fed_trend,
+                "pc_level": new_pc_level,
+                "fg_zone": new_fg_zone,
                 "last_vix": vix,
                 "last_updated": datetime.now(timezone.utc).isoformat(),
             })
@@ -513,6 +610,8 @@ def main(
         "fx_level": new_fx_level,
         "ism_level": new_ism_level,
         "fed_bs_trend": new_fed_trend,
+        "pc_level": new_pc_level,
+        "fg_zone": new_fg_zone,
         "last_vix": vix,
         "last_updated": datetime.now(timezone.utc).isoformat(),
     })

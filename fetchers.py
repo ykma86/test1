@@ -3,6 +3,7 @@ import logging
 import time
 from typing import Optional
 
+import requests
 import yfinance as yf
 import pandas as pd
 from fredapi import Fred
@@ -178,8 +179,42 @@ def fetch_copper() -> Optional[float]:
         return None
 
 
+def fetch_put_call_ratio() -> Optional[float]:
+    """CBOE 주식 Put/Call Ratio 일별 최신값. 실패 시 None."""
+    try:
+        url = "https://www.cboe.com/publish/scheduledtask/mktdata/datahouse/equitypc.csv"
+        resp = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+        resp.raise_for_status()
+        rows = []
+        for line in resp.text.strip().splitlines():
+            line = line.strip()
+            if not line or line.upper().startswith('"DATE') or line.upper().startswith('DATE'):
+                continue
+            parts = line.split(",")
+            if len(parts) >= 2:
+                rows.append(parts)
+        if not rows:
+            return None
+        return round(float(rows[-1][1].strip().strip('"')), 2)
+    except Exception as e:
+        logger.warning(f"Put/Call Ratio fetch 실패: {e}")
+        return None
+
+
+def fetch_fear_greed() -> Optional[float]:
+    """CNN Fear & Greed Index (0~100). 비공식 API — 실패 시 None."""
+    try:
+        url = "https://production.dataviz.cnn.io/index/fearandgreed/graphdata"
+        resp = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+        resp.raise_for_status()
+        return round(float(resp.json()["fear_and_greed"]["score"]), 1)
+    except Exception as e:
+        logger.warning(f"Fear & Greed fetch 실패: {e}")
+        return None
+
+
 def fetch_all(api_key: str) -> dict[str, Optional[float]]:
-    """12개 핵심 + 6개 확장 지표 fetch. 실패 지표는 None."""
+    """12개 핵심 + 8개 확장 지표 fetch. 실패 지표는 None."""
     results: dict[str, Optional[float]] = {}
 
     for name, series_id in FRED_SERIES.items():
@@ -189,17 +224,19 @@ def fetch_all(api_key: str) -> dict[str, Optional[float]]:
     results["move"]    = fetch_move()
 
     # 확장 지표
-    results["ism_pmi"] = fetch_ism_pmi(api_key)
-    results["nfp_chg"] = fetch_nfp_change(api_key)
-    results["fed_bs"]  = fetch_fed_balance(api_key)
-    results["m2_yoy"]  = fetch_m2_yoy(api_key)
-    results["wti"]     = fetch_wti()
-    results["copper"]  = fetch_copper()
+    results["ism_pmi"]   = fetch_ism_pmi(api_key)
+    results["nfp_chg"]   = fetch_nfp_change(api_key)
+    results["fed_bs"]    = fetch_fed_balance(api_key)
+    results["m2_yoy"]    = fetch_m2_yoy(api_key)
+    results["wti"]       = fetch_wti()
+    results["copper"]    = fetch_copper()
+    results["pc_ratio"]  = fetch_put_call_ratio()
+    results["fear_greed"] = fetch_fear_greed()
 
     failed = [k for k, v in results.items() if v is None]
     if failed:
         logger.warning(f"fetch 실패 지표: {failed}")
     else:
-        logger.info("18개 지표 전체 fetch 완료")
+        logger.info("20개 지표 전체 fetch 완료")
 
     return results
