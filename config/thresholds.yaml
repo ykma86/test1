@@ -12,4 +12,4 @@ hy_spread:
 
 falling_knife_mode: true
 
-quiet_hours: [0, 7]
+quiet_hours: [0, 0]
