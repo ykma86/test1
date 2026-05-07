@@ -30,6 +30,10 @@
   },
   "falling_knife_active": false,
   "fx_level": "high",
-  "last_vix": 17.31999969482422,
-  "last_updated": "2026-05-07T16:44:42.102728+00:00"
+  "ism_level": "unknown",
+  "fed_bs_trend": "expanding",
+  "pc_level": "unknown",
+  "fg_zone": "unknown",
+  "last_vix": 17.299999237060547,
+  "last_updated": "2026-05-07T16:48:26.007773+00:00"
 }
