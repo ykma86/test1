@@ -34,4 +34,4 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add state/previous_state.json
           git diff --cached --quiet || git commit -m "chore: update daily state"
-          git push
+          git pull --rebase && git push
