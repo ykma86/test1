@@ -4,15 +4,15 @@
   "regime": "스태그플레이션",
   "momentum_top3": [
     "TQQQ",
-    "UPRO",
-    "SPXL"
+    "122630.KS",
+    "UPRO"
   ],
   "momentum_scores": {
     "TQQQ": 6,
+    "122630.KS": 6,
     "UPRO": 5,
     "SPXL": 5,
     "SOXL": 5,
-    "122630.KS": 5,
     "LABU": 4,
     "FNGU": 4,
     "BIL": 4,
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 17.079999923706055,
-  "last_updated": "2026-05-08T02:50:19.156315+00:00"
+  "last_updated": "2026-05-08T05:30:42.743406+00:00"
 }
