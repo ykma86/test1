@@ -4,26 +4,26 @@
   "regime": "스태그플레이션",
   "momentum_top3": [
     "LABU",
-    "122630.KS",
-    "TQQQ"
+    "TQQQ",
+    "UPRO"
   ],
   "momentum_scores": {
     "LABU": 6,
-    "122630.KS": 6,
     "TQQQ": 5,
     "UPRO": 5,
     "SPXL": 5,
     "SOXL": 5,
     "FNGU": 5,
+    "122630.KS": 5,
     "BIL": 4,
     "XLP": 4,
     "SCHP": 4,
     "XLE": 2,
     "XLV": 2,
-    "233740.KS": 2,
     "SQQQ": 1,
     "SOXS": 1,
     "TLT": 1,
+    "233740.KS": 1,
     "FAS": 0,
     "SPXU": 0,
     "GLD": 0
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 17.8700008392334,
-  "last_updated": "2026-05-14T00:03:46.485558+00:00"
+  "last_updated": "2026-05-14T03:50:41.228969+00:00"
 }
