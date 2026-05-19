@@ -3,21 +3,21 @@
   "phase": "2단계",
   "regime": "스태그플레이션",
   "momentum_top3": [
-    "SPXL",
     "TQQQ",
+    "SPXL",
     "UPRO"
   ],
   "momentum_scores": {
+    "TQQQ": 6,
     "SPXL": 6,
-    "TQQQ": 5,
     "UPRO": 5,
+    "FNGU": 5,
     "BIL": 5,
     "XLE": 5,
     "122630.KS": 5,
     "SOXL": 4,
-    "FNGU": 4,
     "XLP": 4,
-    "XLV": 2,
+    "XLV": 3,
     "SQQQ": 1,
     "SOXS": 1,
     "TLT": 1,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 17.969999313354492,
-  "last_updated": "2026-05-19T16:19:25.404438+00:00"
+  "last_vix": 18.059999465942383,
+  "last_updated": "2026-05-19T20:49:27.301553+00:00"
 }
