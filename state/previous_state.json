@@ -4,13 +4,13 @@
   "regime": "스태그플레이션",
   "momentum_top3": [
     "TQQQ",
-    "SPXL",
-    "UPRO"
+    "UPRO",
+    "SPXL"
   ],
   "momentum_scores": {
     "TQQQ": 6,
+    "UPRO": 6,
     "SPXL": 6,
-    "UPRO": 5,
     "SOXL": 5,
     "BIL": 5,
     "XLE": 5,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 17.440000534057617,
-  "last_updated": "2026-05-21T00:10:12.405018+00:00"
+  "last_vix": 17.530000686645508,
+  "last_updated": "2026-05-21T07:51:36.322260+00:00"
 }
