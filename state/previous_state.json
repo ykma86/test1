@@ -22,10 +22,10 @@
     "XLV": 2,
     "SCHP": 2,
     "233740.KS": 2,
+    "SPXU": 1,
     "SOXS": 1,
     "TLT": 1,
     "SQQQ": 0,
-    "SPXU": 0,
     "GLD": 0
   },
   "falling_knife_active": false,
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 17.010000228881836,
-  "last_updated": "2026-05-26T19:21:34.737699+00:00"
+  "last_updated": "2026-05-27T00:09:16.869162+00:00"
 }
