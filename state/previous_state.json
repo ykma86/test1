@@ -16,17 +16,17 @@
     "BIL": 5,
     "122630.KS": 5,
     "LABU": 3,
-    "XLE": 3,
-    "XLP": 3,
     "FAS": 2,
+    "XLE": 2,
+    "XLP": 2,
     "XLV": 2,
     "SCHP": 2,
     "SOXS": 1,
+    "TLT": 1,
     "233740.KS": 1,
     "SQQQ": 0,
     "SPXU": 0,
-    "GLD": 0,
-    "TLT": 0
+    "GLD": 0
   },
   "falling_knife_active": false,
   "fx_level": "high",
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 16.84000015258789,
-  "last_updated": "2026-05-27T16:36:50.259197+00:00"
+  "last_vix": 16.290000915527344,
+  "last_updated": "2026-05-28T00:02:36.695932+00:00"
 }
