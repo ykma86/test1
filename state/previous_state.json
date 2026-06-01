@@ -11,14 +11,13 @@
     "TQQQ": 6,
     "UPRO": 6,
     "SPXL": 6,
-    "BIL": 6,
     "SOXL": 5,
-    "LABU": 5,
     "FNGU": 5,
     "122630.KS": 5,
-    "FAS": 3,
-    "SCHP": 3,
-    "XLE": 2,
+    "BIL": 4,
+    "LABU": 3,
+    "XLE": 3,
+    "FAS": 2,
     "XLV": 2,
     "SOXS": 1,
     "GLD": 1,
@@ -26,7 +25,8 @@
     "SQQQ": 0,
     "SPXU": 0,
     "TLT": 0,
-    "XLP": 0
+    "XLP": 0,
+    "SCHP": 0
   },
   "falling_knife_active": false,
   "fx_level": "high",
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 15.319999694824219,
-  "last_updated": "2026-06-01T00:09:17.275072+00:00"
+  "last_vix": 15.890000343322754,
+  "last_updated": "2026-06-01T15:56:17.506367+00:00"
 }
