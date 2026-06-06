@@ -17,11 +17,11 @@
     "FNGU": 4,
     "XLV": 4,
     "122630.KS": 4,
+    "SQQQ": 2,
     "SPXU": 2,
     "XLP": 2,
     "SCHP": 2,
     "LABU": 1,
-    "SQQQ": 1,
     "SOXS": 1,
     "GLD": 1,
     "TLT": 1,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 20.510000228881836,
-  "last_updated": "2026-06-05T19:53:26.921516+00:00"
+  "last_vix": 21.510000228881836,
+  "last_updated": "2026-06-06T00:09:47.663101+00:00"
 }
