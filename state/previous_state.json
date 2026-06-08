@@ -1,5 +1,5 @@
 {
-  "threshold_level": 20,
+  "threshold_level": 0,
   "phase": "2단계",
   "regime": "스태그플레이션",
   "momentum_top3": [
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 21.510000228881836,
-  "last_updated": "2026-06-08T00:12:04.918583+00:00"
+  "last_vix": 19.8700008392334,
+  "last_updated": "2026-06-08T08:54:23.892106+00:00"
 }
