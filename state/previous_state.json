@@ -1,31 +1,31 @@
 {
-  "threshold_level": 20,
+  "threshold_level": 0,
   "phase": "2단계",
   "regime": "스태그플레이션",
   "momentum_top3": [
     "SOXL",
     "FAS",
-    "BIL"
+    "TQQQ"
   ],
   "momentum_scores": {
     "SOXL": 6,
     "FAS": 6,
+    "TQQQ": 5,
+    "UPRO": 5,
+    "SPXL": 5,
     "BIL": 5,
     "XLV": 5,
-    "TQQQ": 4,
-    "SPXL": 4,
-    "UPRO": 3,
-    "FNGU": 3,
+    "FNGU": 4,
+    "LABU": 3,
+    "SCHP": 3,
     "122630.KS": 3,
-    "LABU": 2,
-    "SPXU": 2,
-    "SCHP": 2,
+    "XLP": 2,
     "SQQQ": 1,
+    "SPXU": 1,
     "SOXS": 1,
     "GLD": 1,
     "TLT": 1,
     "XLE": 1,
-    "XLP": 1,
     "233740.KS": 1
   },
   "falling_knife_active": false,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 20.469999313354492,
-  "last_updated": "2026-06-09T15:54:24.928025+00:00"
+  "last_vix": 19.8700008392334,
+  "last_updated": "2026-06-09T20:56:48.610739+00:00"
 }
