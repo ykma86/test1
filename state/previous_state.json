@@ -12,7 +12,6 @@
     "BIL": 6,
     "SOXL": 5,
     "TLT": 5,
-    "122630.KS": 5,
     "TQQQ": 4,
     "UPRO": 4,
     "SPXL": 4,
@@ -24,6 +23,7 @@
     "GLD": 1,
     "XLE": 1,
     "XLV": 1,
+    "122630.KS": 1,
     "SQQQ": 0,
     "SOXS": 0,
     "233740.KS": 0
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 16.399999618530273,
-  "last_updated": "2026-06-19T01:44:54.580390+00:00"
+  "last_vix": 16.770000457763672,
+  "last_updated": "2026-06-19T15:16:18.915348+00:00"
 }
