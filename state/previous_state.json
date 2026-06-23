@@ -11,12 +11,12 @@
     "LABU": 7,
     "SOXL": 6,
     "BIL": 5,
-    "122630.KS": 5,
     "TQQQ": 4,
     "UPRO": 4,
     "SPXL": 4,
     "FAS": 4,
     "TLT": 4,
+    "122630.KS": 3,
     "FNGU": 2,
     "XLP": 2,
     "XLV": 2,
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 17.280000686645508,
-  "last_updated": "2026-06-23T00:09:55.625604+00:00"
+  "last_updated": "2026-06-23T04:59:39.767620+00:00"
 }
