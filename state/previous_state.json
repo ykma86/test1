@@ -1,7 +1,7 @@
 {
   "threshold_level": 0,
   "phase": "2단계",
-  "regime": "스태그플레이션",
+  "regime": "침체",
   "momentum_top3": [
     "LABU",
     "SOXL",
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 19.540000915527344,
-  "last_updated": "2026-06-23T20:02:36.394805+00:00"
+  "last_vix": 19.489999771118164,
+  "last_updated": "2026-06-23T22:12:05.198460+00:00"
 }
