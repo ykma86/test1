@@ -11,20 +11,20 @@
     "LABU": 6,
     "SOXL": 5,
     "BIL": 5,
+    "TLT": 4,
     "XLP": 4,
     "XLV": 4,
     "SCHP": 4,
     "122630.KS": 4,
-    "TQQQ": 3,
     "FAS": 3,
-    "TLT": 3,
+    "TQQQ": 2,
     "UPRO": 2,
     "SPXL": 2,
     "FNGU": 2,
     "SPXU": 1,
+    "SOXS": 1,
     "233740.KS": 1,
     "SQQQ": 0,
-    "SOXS": 0,
     "GLD": 0,
     "XLE": 0
   },
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 19.25,
-  "last_updated": "2026-06-26T15:23:06.167166+00:00"
+  "last_vix": 18.40999984741211,
+  "last_updated": "2026-06-27T00:11:30.269545+00:00"
 }
