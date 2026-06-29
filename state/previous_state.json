@@ -3,22 +3,22 @@
   "phase": "2단계",
   "regime": "침체",
   "momentum_top3": [
+    "TQQQ",
     "LABU",
-    "BIL",
-    "XLV"
+    "BIL"
   ],
   "momentum_scores": {
+    "TQQQ": 6,
     "LABU": 6,
     "BIL": 5,
     "XLV": 5,
-    "TQQQ": 4,
+    "UPRO": 4,
+    "SPXL": 4,
     "SOXL": 4,
+    "XLP": 4,
     "SCHP": 4,
-    "UPRO": 3,
-    "SPXL": 3,
     "FAS": 3,
     "TLT": 3,
-    "XLP": 3,
     "122630.KS": 3,
     "FNGU": 2,
     "SOXS": 1,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 17.920000076293945,
-  "last_updated": "2026-06-29T16:52:24.521458+00:00"
+  "last_vix": 17.600000381469727,
+  "last_updated": "2026-06-29T19:04:10.176594+00:00"
 }
