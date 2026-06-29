@@ -23,9 +23,9 @@
     "FNGU": 2,
     "SPXU": 1,
     "SOXS": 1,
+    "GLD": 1,
     "233740.KS": 1,
     "SQQQ": 0,
-    "GLD": 0,
     "XLE": 0
   },
   "falling_knife_active": false,
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 18.40999984741211,
-  "last_updated": "2026-06-27T00:11:30.269545+00:00"
+  "last_updated": "2026-06-29T00:12:18.325912+00:00"
 }
