@@ -15,10 +15,10 @@
     "UPRO": 4,
     "SPXL": 4,
     "SOXL": 4,
+    "TLT": 4,
     "XLP": 4,
     "SCHP": 4,
     "FAS": 3,
-    "TLT": 3,
     "122630.KS": 3,
     "FNGU": 2,
     "SOXS": 1,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 17.600000381469727,
-  "last_updated": "2026-06-29T19:04:10.176594+00:00"
+  "last_vix": 17.649999618530273,
+  "last_updated": "2026-06-30T00:07:14.661588+00:00"
 }
