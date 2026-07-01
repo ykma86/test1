@@ -11,11 +11,11 @@
     "TQQQ": 5,
     "SOXL": 5,
     "LABU": 5,
+    "BIL": 5,
     "XLV": 5,
     "UPRO": 4,
     "SPXL": 4,
     "TLT": 4,
-    "BIL": 4,
     "FAS": 3,
     "SCHP": 3,
     "122630.KS": 3,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 16.5,
-  "last_updated": "2026-06-30T19:55:02.671467+00:00"
+  "last_vix": 16.450000762939453,
+  "last_updated": "2026-07-01T00:08:24.159258+00:00"
 }
