@@ -14,15 +14,15 @@
     "SPXL": 5,
     "LABU": 5,
     "FAS": 5,
-    "XLP": 3,
+    "XLP": 4,
+    "FNGU": 3,
     "TQQQ": 2,
     "SOXL": 2,
-    "FNGU": 2,
     "SCHP": 2,
-    "SQQQ": 1,
     "TLT": 1,
     "122630.KS": 1,
     "233740.KS": 1,
+    "SQQQ": 0,
     "SPXU": 0,
     "SOXS": 0,
     "GLD": 0,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 16.780000686645508,
-  "last_updated": "2026-07-02T17:46:16.514202+00:00"
+  "last_vix": 16.149999618530273,
+  "last_updated": "2026-07-03T00:09:12.253705+00:00"
 }
