@@ -19,8 +19,8 @@
     "TQQQ": 2,
     "SOXL": 2,
     "SCHP": 2,
+    "122630.KS": 2,
     "TLT": 1,
-    "122630.KS": 1,
     "233740.KS": 1,
     "SQQQ": 0,
     "SPXU": 0,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 16.149999618530273,
-  "last_updated": "2026-07-03T00:09:12.253705+00:00"
+  "last_vix": 15.8100004196167,
+  "last_updated": "2026-07-04T00:07:35.191242+00:00"
 }
