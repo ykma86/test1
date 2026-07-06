@@ -18,9 +18,9 @@
     "FNGU": 3,
     "TQQQ": 2,
     "SOXL": 2,
-    "SCHP": 2,
     "122630.KS": 2,
     "TLT": 1,
+    "SCHP": 1,
     "233740.KS": 1,
     "SQQQ": 0,
     "SPXU": 0,
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 15.8100004196167,
-  "last_updated": "2026-07-04T00:07:35.191242+00:00"
+  "last_updated": "2026-07-06T00:09:36.733170+00:00"
 }
