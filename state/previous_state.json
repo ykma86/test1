@@ -12,11 +12,11 @@
     "FNGU": 5,
     "UPRO": 4,
     "SPXL": 4,
+    "FAS": 4,
     "BIL": 4,
     "XLE": 4,
     "XLV": 4,
     "TQQQ": 3,
-    "FAS": 3,
     "SOXL": 2,
     "122630.KS": 2,
     "SOXS": 1,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 16.510000228881836,
-  "last_updated": "2026-07-14T18:02:23.597434+00:00"
+  "last_vix": 16.5,
+  "last_updated": "2026-07-14T23:54:55.262068+00:00"
 }
