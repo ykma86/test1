@@ -8,7 +8,7 @@
     "FAS"
   ],
   "momentum_scores": {
-    "XLE": 6,
+    "XLE": 5,
     "LABU": 4,
     "FAS": 4,
     "BIL": 4,
@@ -21,9 +21,9 @@
     "TQQQ": 1,
     "FNGU": 1,
     "SPXU": 1,
+    "GLD": 1,
     "XLP": 1,
     "122630.KS": 1,
-    "GLD": 0,
     "TLT": 0,
     "SCHP": 0,
     "233740.KS": 0
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 19.489999771118164,
-  "last_updated": "2026-07-23T19:14:29.538944+00:00"
+  "last_vix": 18.700000762939453,
+  "last_updated": "2026-07-24T00:03:32.198685+00:00"
 }
