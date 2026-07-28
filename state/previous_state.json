@@ -13,8 +13,8 @@
     "BIL": 6,
     "XLE": 6,
     "XLV": 6,
-    "LABU": 4,
     "SQQQ": 4,
+    "LABU": 3,
     "TQQQ": 2,
     "SPXL": 2,
     "SPXU": 2,
@@ -23,8 +23,8 @@
     "SOXL": 1,
     "FNGU": 1,
     "TLT": 1,
-    "SCHP": 1,
     "GLD": 0,
+    "SCHP": 0,
     "122630.KS": 0,
     "233740.KS": 0
   },
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 18.209999084472656,
-  "last_updated": "2026-07-28T21:05:36.345314+00:00"
+  "last_updated": "2026-07-28T23:59:44.212459+00:00"
 }
