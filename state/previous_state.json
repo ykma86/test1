@@ -1,5 +1,5 @@
 {
-  "threshold_level": 0,
+  "threshold_level": 20,
   "phase": "2단계",
   "regime": "침체",
   "momentum_top3": [
@@ -15,7 +15,7 @@
     "XLE": 5,
     "SQQQ": 4,
     "SPXU": 4,
-    "LABU": 3,
+    "LABU": 2,
     "SOXS": 2,
     "TQQQ": 1,
     "UPRO": 1,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 19.389999389648438,
-  "last_updated": "2026-07-29T14:26:27.821777+00:00"
+  "last_vix": 20.170000076293945,
+  "last_updated": "2026-07-29T16:20:46.530352+00:00"
 }
