@@ -21,12 +21,12 @@
     "SPXL": 2,
     "TQQQ": 1,
     "SOXL": 1,
+    "FNGU": 1,
     "GLD": 1,
     "TLT": 1,
     "SCHP": 1,
     "122630.KS": 1,
-    "233740.KS": 1,
-    "FNGU": 0
+    "233740.KS": 1
   },
   "falling_knife_active": false,
   "fx_level": "high",
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 20.389999389648438,
-  "last_updated": "2026-07-29T20:12:03.179517+00:00"
+  "last_vix": 20.65999984741211,
+  "last_updated": "2026-07-30T00:02:38.675818+00:00"
 }
