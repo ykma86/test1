@@ -13,8 +13,8 @@
     "FAS": 6,
     "FNGU": 6,
     "XLV": 6,
+    "LABU": 5,
     "BIL": 5,
-    "LABU": 4,
     "TQQQ": 3,
     "GLD": 3,
     "XLE": 3,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 16.1200008392334,
-  "last_updated": "2026-08-05T16:40:57.906553+00:00"
+  "last_vix": 15.8100004196167,
+  "last_updated": "2026-08-06T00:02:42.278092+00:00"
 }
