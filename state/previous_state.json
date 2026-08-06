@@ -5,18 +5,18 @@
   "momentum_top3": [
     "UPRO",
     "SPXL",
-    "FAS"
+    "FNGU"
   ],
   "momentum_scores": {
     "UPRO": 7,
     "SPXL": 7,
-    "FAS": 6,
-    "FNGU": 6,
+    "FNGU": 7,
     "XLV": 6,
-    "LABU": 5,
+    "FAS": 5,
     "BIL": 5,
+    "LABU": 4,
+    "GLD": 4,
     "TQQQ": 3,
-    "GLD": 3,
     "XLE": 3,
     "XLP": 3,
     "SOXL": 1,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 15.8100004196167,
-  "last_updated": "2026-08-06T00:02:42.278092+00:00"
+  "last_vix": 15.369999885559082,
+  "last_updated": "2026-08-06T15:12:18.217374+00:00"
 }
