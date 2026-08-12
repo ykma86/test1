@@ -3,21 +3,21 @@
   "phase": "2단계",
   "regime": "침체",
   "momentum_top3": [
+    "LABU",
     "XLE",
-    "XLV",
-    "UPRO"
+    "XLV"
   ],
   "momentum_scores": {
+    "LABU": 7,
     "XLE": 6,
     "XLV": 6,
     "UPRO": 5,
     "SPXL": 5,
     "FAS": 5,
+    "FNGU": 5,
     "GLD": 4,
     "BIL": 4,
-    "LABU": 3,
     "XLP": 3,
-    "FNGU": 2,
     "233740.KS": 2,
     "TQQQ": 1,
     "TLT": 1,
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 15.279999732971191,
-  "last_updated": "2026-08-12T04:06:06.589231+00:00"
+  "last_updated": "2026-08-12T06:12:40.830055+00:00"
 }
