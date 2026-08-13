@@ -20,9 +20,9 @@
     "BIL": 4,
     "GLD": 3,
     "233740.KS": 3,
-    "SCHP": 2,
     "SOXL": 1,
     "TLT": 1,
+    "SCHP": 1,
     "SQQQ": 0,
     "SPXU": 0,
     "SOXS": 0,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 14.649999618530273,
-  "last_updated": "2026-08-13T19:55:03.279283+00:00"
+  "last_vix": 14.630000114440918,
+  "last_updated": "2026-08-13T23:43:20.375532+00:00"
 }
