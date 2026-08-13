@@ -4,18 +4,18 @@
   "regime": "침체",
   "momentum_top3": [
     "LABU",
-    "XLE",
-    "UPRO"
+    "FAS",
+    "XLE"
   ],
   "momentum_scores": {
-    "LABU": 7,
+    "LABU": 6,
+    "FAS": 6,
     "XLE": 6,
     "UPRO": 5,
     "SPXL": 5,
     "XLP": 5,
     "XLV": 5,
     "TQQQ": 4,
-    "FAS": 4,
     "FNGU": 4,
     "BIL": 4,
     "GLD": 3,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 14.680000305175781,
-  "last_updated": "2026-08-13T18:02:42.740643+00:00"
+  "last_vix": 14.649999618530273,
+  "last_updated": "2026-08-13T19:55:03.279283+00:00"
 }
