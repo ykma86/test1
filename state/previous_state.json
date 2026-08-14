@@ -3,15 +3,15 @@
   "phase": "2단계",
   "regime": "침체",
   "momentum_top3": [
+    "LABU",
     "XLE",
-    "UPRO",
-    "SPXL"
+    "UPRO"
   ],
   "momentum_scores": {
+    "LABU": 6,
     "XLE": 6,
     "UPRO": 5,
     "SPXL": 5,
-    "LABU": 5,
     "FAS": 5,
     "BIL": 5,
     "XLP": 5,
@@ -19,12 +19,14 @@
     "TQQQ": 4,
     "FNGU": 4,
     "GLD": 3,
+    "233740.KS": 3,
+    "SCHP": 2,
     "SOXL": 1,
-    "SCHP": 1,
     "SQQQ": 0,
     "SPXU": 0,
     "SOXS": 0,
-    "TLT": 0
+    "TLT": 0,
+    "122630.KS": 0
   },
   "falling_knife_active": false,
   "fx_level": "normal",
@@ -32,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 14.260000228881836,
-  "last_updated": "2026-08-14T20:28:47.345089+00:00"
+  "last_vix": 14.25,
+  "last_updated": "2026-08-14T22:20:38.175943+00:00"
 }
