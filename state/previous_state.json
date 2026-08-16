@@ -19,14 +19,12 @@
     "TQQQ": 4,
     "FNGU": 4,
     "GLD": 3,
-    "233740.KS": 3,
-    "SCHP": 2,
     "SOXL": 1,
+    "SCHP": 1,
     "SQQQ": 0,
     "SPXU": 0,
     "SOXS": 0,
-    "TLT": 0,
-    "122630.KS": 0
+    "TLT": 0
   },
   "falling_knife_active": false,
   "fx_level": "normal",
@@ -35,5 +33,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 14.25,
-  "last_updated": "2026-08-16T09:26:45.538073+00:00"
+  "last_updated": "2026-08-16T23:21:54.972513+00:00"
 }
