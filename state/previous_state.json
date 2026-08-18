@@ -14,15 +14,16 @@
     "UPRO": 5,
     "SPXL": 5,
     "FAS": 5,
+    "BIL": 5,
     "FNGU": 4,
-    "BIL": 4,
     "XLP": 4,
     "GLD": 3,
     "TQQQ": 2,
     "SOXL": 1,
+    "SPXU": 1,
     "SCHP": 1,
+    "122630.KS": 1,
     "SQQQ": 0,
-    "SPXU": 0,
     "SOXS": 0,
     "TLT": 0
   },
@@ -32,6 +33,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 15.630000114440918,
-  "last_updated": "2026-08-18T19:26:17.637758+00:00"
+  "last_vix": 15.84000015258789,
+  "last_updated": "2026-08-18T23:23:54.268553+00:00"
 }
