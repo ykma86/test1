@@ -5,12 +5,11 @@
   "momentum_top3": [
     "LABU",
     "FAS",
-    "233740.KS"
+    "UPRO"
   ],
   "momentum_scores": {
     "LABU": 3,
     "FAS": 3,
-    "233740.KS": 3,
     "UPRO": 2,
     "SPXL": 2,
     "GLD": 2,
@@ -21,7 +20,6 @@
     "FNGU": 1,
     "XLP": 1,
     "SCHP": 1,
-    "122630.KS": 1,
     "SOXL": 0,
     "SQQQ": 0,
     "SPXU": 0,
@@ -34,6 +32,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 15.989999771118164,
-  "last_updated": "2026-08-18T08:34:41.810738+00:00"
+  "last_vix": 15.880000114440918,
+  "last_updated": "2026-08-18T09:31:41.576370+00:00"
 }
