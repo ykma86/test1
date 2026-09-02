@@ -8,24 +8,24 @@
     "FNGU"
   ],
   "momentum_scores": {
-    "XLE": 6,
+    "XLE": 7,
     "LABU": 4,
     "FNGU": 4,
     "SOXS": 4,
     "BIL": 4,
     "XLV": 4,
+    "UPRO": 3,
     "FAS": 3,
     "SQQQ": 3,
     "XLP": 3,
-    "UPRO": 2,
     "SPXL": 2,
     "SPXU": 2,
-    "GLD": 1,
-    "TLT": 1,
+    "GLD": 2,
     "SCHP": 1,
     "122630.KS": 1,
     "TQQQ": 0,
     "SOXL": 0,
+    "TLT": 0,
     "233740.KS": 0
   },
   "falling_knife_active": false,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 16.09000015258789,
-  "last_updated": "2026-09-01T17:36:42.085665+00:00"
+  "last_vix": 16.34000015258789,
+  "last_updated": "2026-09-02T00:53:31.900771+00:00"
 }
