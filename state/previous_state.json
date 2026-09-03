@@ -17,13 +17,13 @@
     "GLD": 5,
     "XLV": 5,
     "LABU": 4,
+    "SPXU": 3,
     "SOXS": 3,
-    "XLP": 3,
     "TQQQ": 2,
-    "SPXU": 2,
-    "SCHP": 2,
-    "SQQQ": 1,
+    "SQQQ": 2,
+    "XLP": 2,
     "TLT": 1,
+    "SCHP": 1,
     "SOXL": 0,
     "122630.KS": 0,
     "233740.KS": 0
@@ -31,9 +31,9 @@
   "falling_knife_active": false,
   "fx_level": "normal",
   "ism_level": "unknown",
-  "fed_bs_trend": "expanding",
+  "fed_bs_trend": "contracting",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 14.5,
-  "last_updated": "2026-09-03T18:20:59.022019+00:00"
+  "last_vix": 14.319999694824219,
+  "last_updated": "2026-09-03T21:34:08.942448+00:00"
 }
