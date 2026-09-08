@@ -20,12 +20,12 @@
     "GLD": 3,
     "SPXU": 2,
     "XLP": 2,
+    "122630.KS": 2,
     "TQQQ": 1,
     "SQQQ": 1,
     "TLT": 1,
     "SCHP": 1,
     "SOXL": 0,
-    "122630.KS": 0,
     "233740.KS": 0
   },
   "falling_knife_active": false,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "contracting",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 14.529999732971191,
-  "last_updated": "2026-09-07T00:45:34.319254+00:00"
+  "last_vix": 15.300000190734863,
+  "last_updated": "2026-09-08T01:00:14.184027+00:00"
 }
