@@ -5,13 +5,13 @@
   "momentum_top3": [
     "XLE",
     "FNGU",
-    "FAS"
+    "BIL"
   ],
   "momentum_scores": {
     "XLE": 7,
     "FNGU": 5,
+    "BIL": 5,
     "FAS": 4,
-    "BIL": 4,
     "XLV": 4,
     "UPRO": 3,
     "SPXL": 3,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "contracting",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 16.489999771118164,
-  "last_updated": "2026-09-09T20:26:36.932119+00:00"
+  "last_vix": 16.459999084472656,
+  "last_updated": "2026-09-09T22:56:09.215149+00:00"
 }
