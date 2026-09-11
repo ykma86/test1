@@ -1,30 +1,30 @@
 {
   "threshold_level": 0,
-  "phase": "2단계",
+  "phase": "회피",
   "regime": "침체",
   "momentum_top3": [
     "XLE",
     "FNGU",
-    "FAS"
+    "BIL"
   ],
   "momentum_scores": {
     "XLE": 6,
     "FNGU": 5,
-    "FAS": 4,
-    "BIL": 4,
-    "SPXL": 3,
-    "SOXS": 3,
-    "XLV": 3,
-    "UPRO": 2,
-    "LABU": 2,
-    "SQQQ": 2,
+    "BIL": 5,
+    "UPRO": 4,
+    "SPXL": 4,
+    "FAS": 3,
+    "GLD": 3,
+    "TQQQ": 2,
     "SPXU": 2,
-    "GLD": 2,
+    "SOXS": 2,
+    "XLV": 2,
     "122630.KS": 2,
+    "SOXL": 1,
+    "LABU": 1,
+    "SQQQ": 1,
     "TLT": 1,
     "XLP": 1,
-    "TQQQ": 0,
-    "SOXL": 0,
     "SCHP": 0,
     "233740.KS": 0
   },
@@ -34,6 +34,6 @@
   "fed_bs_trend": "contracting",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 17.84000015258789,
-  "last_updated": "2026-09-11T03:05:18.052145+00:00"
+  "last_vix": 15.710000038146973,
+  "last_updated": "2026-09-11T17:31:24.847202+00:00"
 }
