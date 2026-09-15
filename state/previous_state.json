@@ -4,24 +4,24 @@
   "regime": "침체",
   "momentum_top3": [
     "XLE",
-    "FNGU",
-    "BIL"
+    "UPRO",
+    "SPXL"
   ],
   "momentum_scores": {
-    "XLE": 6,
-    "FNGU": 5,
-    "BIL": 5,
-    "XLV": 5,
-    "SOXS": 4,
-    "FAS": 3,
-    "SPXU": 3,
-    "TQQQ": 2,
-    "UPRO": 2,
-    "SPXL": 2,
-    "SQQQ": 2,
+    "XLE": 4,
+    "UPRO": 3,
+    "SPXL": 3,
+    "XLV": 3,
+    "FAS": 2,
+    "FNGU": 2,
+    "SPXU": 2,
+    "SOXS": 2,
+    "GLD": 2,
+    "BIL": 2,
+    "TQQQ": 1,
     "SOXL": 1,
     "LABU": 1,
-    "GLD": 1,
+    "SQQQ": 1,
     "TLT": 1,
     "XLP": 1,
     "SCHP": 1,
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 17.100000381469727,
-  "last_updated": "2026-09-14T20:45:06.888595+00:00"
+  "last_updated": "2026-09-15T01:15:43.317679+00:00"
 }
