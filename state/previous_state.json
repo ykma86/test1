@@ -4,28 +4,28 @@
   "regime": "침체",
   "momentum_top3": [
     "XLE",
-    "SQQQ",
-    "BIL"
+    "SPXL",
+    "FAS"
   ],
   "momentum_scores": {
-    "XLE": 7,
-    "SQQQ": 6,
-    "BIL": 5,
-    "FNGU": 4,
-    "SPXU": 4,
-    "SOXS": 4,
-    "XLV": 4,
-    "SPXL": 3,
-    "UPRO": 2,
+    "XLE": 4,
+    "SPXL": 2,
     "FAS": 2,
+    "FNGU": 2,
+    "SPXU": 2,
+    "SOXS": 2,
+    "GLD": 2,
+    "BIL": 2,
+    "XLV": 2,
+    "UPRO": 1,
     "SOXL": 1,
-    "LABU": 1,
-    "GLD": 1,
+    "SQQQ": 1,
     "TLT": 1,
     "XLP": 1,
     "SCHP": 1,
-    "122630.KS": 1,
     "TQQQ": 0,
+    "LABU": 0,
+    "122630.KS": 0,
     "233740.KS": 0
   },
   "falling_knife_active": false,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "contracting",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 17.469999313354492,
-  "last_updated": "2026-09-15T18:42:57.802973+00:00"
+  "last_vix": 17.200000762939453,
+  "last_updated": "2026-09-16T01:09:55.044167+00:00"
 }
