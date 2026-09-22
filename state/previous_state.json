@@ -5,17 +5,17 @@
   "momentum_top3": [
     "UPRO",
     "SPXL",
-    "FNGU"
+    "TQQQ"
   ],
   "momentum_scores": {
-    "UPRO": 6,
-    "SPXL": 6,
+    "UPRO": 7,
+    "SPXL": 7,
+    "TQQQ": 6,
     "FNGU": 6,
-    "TQQQ": 5,
     "BIL": 5,
+    "XLV": 5,
+    "SOXL": 4,
     "XLE": 4,
-    "XLV": 4,
-    "SOXL": 3,
     "LABU": 3,
     "GLD": 3,
     "FAS": 2,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "contracting",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 14.539999961853027,
-  "last_updated": "2026-09-22T14:20:30.971548+00:00"
+  "last_vix": 14.210000038146973,
+  "last_updated": "2026-09-22T21:46:23.117179+00:00"
 }
