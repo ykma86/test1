@@ -3,30 +3,30 @@
   "phase": "2단계",
   "regime": "침체",
   "momentum_top3": [
-    "BIL",
+    "XLE",
     "TQQQ",
-    "SPXL"
+    "UPRO"
   ],
   "momentum_scores": {
-    "BIL": 6,
-    "TQQQ": 5,
-    "SPXL": 5,
-    "XLV": 5,
-    "UPRO": 4,
-    "FNGU": 4,
-    "SOXL": 3,
     "XLE": 3,
-    "GLD": 2,
+    "TQQQ": 2,
+    "UPRO": 2,
+    "SPXL": 2,
+    "BIL": 2,
+    "122630.KS": 2,
+    "233740.KS": 2,
+    "SOXL": 1,
     "LABU": 1,
     "FAS": 1,
+    "FNGU": 1,
     "SQQQ": 1,
     "SPXU": 1,
     "SOXS": 1,
+    "GLD": 1,
     "TLT": 1,
     "XLP": 1,
-    "SCHP": 1,
-    "122630.KS": 1,
-    "233740.KS": 1
+    "XLV": 1,
+    "SCHP": 1
   },
   "falling_knife_active": false,
   "fx_level": "normal",
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 16.040000915527344,
-  "last_updated": "2026-09-29T21:53:30.132600+00:00"
+  "last_updated": "2026-09-30T01:04:53.202178+00:00"
 }
