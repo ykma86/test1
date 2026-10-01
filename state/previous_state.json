@@ -4,18 +4,18 @@
   "regime": "침체",
   "momentum_top3": [
     "TQQQ",
-    "FNGU",
-    "BIL"
+    "SPXL",
+    "FNGU"
   ],
   "momentum_scores": {
     "TQQQ": 5,
+    "SPXL": 4,
     "FNGU": 4,
     "BIL": 4,
+    "XLV": 4,
     "UPRO": 3,
-    "SPXL": 3,
     "SOXL": 3,
     "XLE": 3,
-    "XLV": 3,
     "233740.KS": 3,
     "GLD": 2,
     "122630.KS": 2,
@@ -31,9 +31,9 @@
   "falling_knife_active": false,
   "fx_level": "normal",
   "ism_level": "unknown",
-  "fed_bs_trend": "contracting",
+  "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 16.3799991607666,
-  "last_updated": "2026-10-01T18:03:09.149807+00:00"
+  "last_vix": 16.389999389648438,
+  "last_updated": "2026-10-01T23:01:03.380358+00:00"
 }
