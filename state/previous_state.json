@@ -14,10 +14,10 @@
     "UPRO": 4,
     "SPXL": 4,
     "FNGU": 4,
+    "233740.KS": 3,
     "SOXL": 2,
     "GLD": 2,
     "XLE": 2,
-    "233740.KS": 2,
     "FAS": 1,
     "SQQQ": 1,
     "SPXU": 1,
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 16.34000015258789,
-  "last_updated": "2026-09-30T23:29:31.782062+00:00"
+  "last_updated": "2026-10-01T01:51:51.100349+00:00"
 }
