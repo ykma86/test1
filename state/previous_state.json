@@ -5,27 +5,27 @@
   "momentum_top3": [
     "UPRO",
     "FNGU",
-    "233740.KS"
+    "SPXL"
   ],
   "momentum_scores": {
-    "UPRO": 3,
-    "FNGU": 3,
+    "UPRO": 7,
+    "FNGU": 7,
+    "SPXL": 6,
+    "TQQQ": 5,
+    "BIL": 5,
+    "XLE": 5,
+    "XLV": 5,
+    "SOXL": 3,
     "233740.KS": 3,
-    "TQQQ": 2,
-    "SPXL": 2,
-    "SOXL": 2,
+    "XLP": 2,
     "LABU": 1,
     "FAS": 1,
     "SOXS": 1,
-    "BIL": 1,
-    "XLE": 1,
-    "XLV": 1,
+    "GLD": 1,
     "122630.KS": 1,
     "SQQQ": 0,
     "SPXU": 0,
-    "GLD": 0,
     "TLT": 0,
-    "XLP": 0,
     "SCHP": 0
   },
   "falling_knife_active": false,
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 14.84000015258789,
-  "last_updated": "2026-10-10T00:29:35.958736+00:00"
+  "last_updated": "2026-10-10T02:10:04.754192+00:00"
 }
