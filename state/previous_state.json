@@ -15,18 +15,18 @@
     "BIL": 5,
     "XLE": 5,
     "XLV": 5,
+    "233740.KS": 4,
     "SOXL": 3,
-    "233740.KS": 3,
     "XLP": 2,
     "LABU": 1,
     "FAS": 1,
     "SOXS": 1,
     "GLD": 1,
-    "122630.KS": 1,
     "SQQQ": 0,
     "SPXU": 0,
     "TLT": 0,
-    "SCHP": 0
+    "SCHP": 0,
+    "122630.KS": 0
   },
   "falling_knife_active": false,
   "fx_level": "normal",
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 14.84000015258789,
-  "last_updated": "2026-10-10T02:10:04.754192+00:00"
+  "last_updated": "2026-10-12T02:09:31.090781+00:00"
 }
