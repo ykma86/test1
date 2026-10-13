@@ -16,10 +16,10 @@
     "TQQQ": 4,
     "BIL": 4,
     "XLP": 4,
-    "233740.KS": 3,
     "SOXL": 2,
     "FAS": 2,
     "SOXS": 2,
+    "233740.KS": 2,
     "LABU": 1,
     "SQQQ": 1,
     "GLD": 1,
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 15.210000038146973,
-  "last_updated": "2026-10-12T21:33:38.775673+00:00"
+  "last_updated": "2026-10-13T03:24:24.470490+00:00"
 }
