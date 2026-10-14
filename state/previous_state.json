@@ -16,10 +16,10 @@
     "SPXL": 4,
     "BIL": 4,
     "XLP": 3,
-    "233740.KS": 3,
     "SOXL": 2,
     "FAS": 2,
     "SOXS": 2,
+    "233740.KS": 2,
     "LABU": 1,
     "SPXU": 1,
     "GLD": 1,
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 15.270000457763672,
-  "last_updated": "2026-10-13T22:22:23.437717+00:00"
+  "last_updated": "2026-10-14T01:41:19.415029+00:00"
 }
