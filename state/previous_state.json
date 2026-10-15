@@ -11,14 +11,13 @@
     "XLV": 7,
     "XLE": 6,
     "XLP": 6,
-    "FNGU": 4,
     "BIL": 4,
     "UPRO": 3,
     "SPXL": 3,
     "TQQQ": 2,
     "SOXL": 2,
+    "FNGU": 2,
     "SOXS": 2,
-    "233740.KS": 2,
     "LABU": 1,
     "FAS": 1,
     "SQQQ": 1,
@@ -26,6 +25,7 @@
     "GLD": 1,
     "SCHP": 1,
     "122630.KS": 1,
+    "233740.KS": 1,
     "TLT": 0
   },
   "falling_knife_active": false,
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 16.8700008392334,
-  "last_updated": "2026-10-14T22:03:09.084206+00:00"
+  "last_updated": "2026-10-15T01:17:31.839825+00:00"
 }
