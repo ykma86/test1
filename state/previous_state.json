@@ -11,10 +11,10 @@
     "XLV": 7,
     "XLP": 6,
     "XLE": 5,
-    "FNGU": 4,
     "BIL": 4,
     "UPRO": 3,
     "SPXL": 3,
+    "FNGU": 3,
     "SOXS": 3,
     "TQQQ": 2,
     "FAS": 2,
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 16.459999084472656,
-  "last_updated": "2026-10-15T20:56:51.549209+00:00"
+  "last_updated": "2026-10-16T01:02:56.290982+00:00"
 }
