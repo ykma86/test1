@@ -25,8 +25,8 @@
     "FNGU": 1,
     "GLD": 1,
     "122630.KS": 1,
-    "233740.KS": 1,
-    "LABU": 0
+    "LABU": 0,
+    "233740.KS": 0
   },
   "falling_knife_active": false,
   "fx_level": "normal",
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 19.450000762939453,
-  "last_updated": "2026-10-24T01:25:10.199635+00:00"
+  "last_updated": "2026-10-26T01:02:28.366937+00:00"
 }
