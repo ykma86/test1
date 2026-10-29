@@ -3,16 +3,16 @@
   "phase": "회피",
   "regime": "침체",
   "momentum_top3": [
-    "BIL",
     "XLV",
+    "BIL",
     "XLE"
   ],
   "momentum_scores": {
+    "XLV": 7,
     "BIL": 6,
-    "XLV": 6,
     "XLE": 5,
+    "XLP": 5,
     "FAS": 4,
-    "XLP": 4,
     "SQQQ": 3,
     "SPXU": 3,
     "SCHP": 3,
@@ -22,10 +22,10 @@
     "TQQQ": 1,
     "UPRO": 1,
     "SPXL": 1,
+    "SOXL": 1,
+    "GLD": 1,
     "122630.KS": 1,
-    "SOXL": 0,
     "FNGU": 0,
-    "GLD": 0,
     "233740.KS": 0
   },
   "falling_knife_active": false,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 16.3700008392334,
-  "last_updated": "2026-10-29T16:36:10.361366+00:00"
+  "last_vix": 17.200000762939453,
+  "last_updated": "2026-10-29T21:31:55.387503+00:00"
 }
