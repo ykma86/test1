@@ -23,10 +23,10 @@
     "SOXL": 1,
     "LABU": 1,
     "GLD": 1,
-    "122630.KS": 1,
     "233740.KS": 1,
     "SPXL": 0,
-    "FNGU": 0
+    "FNGU": 0,
+    "122630.KS": 0
   },
   "falling_knife_active": false,
   "fx_level": "normal",
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 19.420000076293945,
-  "last_updated": "2026-10-31T02:06:18.772687+00:00"
+  "last_updated": "2026-11-02T02:10:26.107847+00:00"
 }
