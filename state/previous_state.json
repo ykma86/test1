@@ -19,14 +19,14 @@
     "TLT": 3,
     "SCHP": 3,
     "LABU": 2,
-    "122630.KS": 2,
     "TQQQ": 1,
     "UPRO": 1,
     "SPXL": 1,
     "SOXL": 1,
     "GLD": 1,
-    "233740.KS": 1,
-    "FNGU": 0
+    "122630.KS": 1,
+    "FNGU": 0,
+    "233740.KS": 0
   },
   "falling_knife_active": false,
   "fx_level": "normal",
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 21.149999618530273,
-  "last_updated": "2026-11-02T22:35:43.335208+00:00"
+  "last_updated": "2026-11-03T03:52:03.246601+00:00"
 }
