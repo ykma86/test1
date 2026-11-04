@@ -24,8 +24,8 @@
     "SPXL": 1,
     "SOXL": 1,
     "GLD": 1,
-    "122630.KS": 1,
     "FNGU": 0,
+    "122630.KS": 0,
     "233740.KS": 0
   },
   "falling_knife_active": false,
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 20.829999923706055,
-  "last_updated": "2026-11-04T00:23:05.715540+00:00"
+  "last_updated": "2026-11-04T02:56:45.504253+00:00"
 }
