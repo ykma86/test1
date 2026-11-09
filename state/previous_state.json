@@ -14,9 +14,9 @@
     "XLP": 6,
     "XLV": 6,
     "TLT": 5,
+    "BIL": 5,
     "FAS": 4,
     "LABU": 3,
-    "BIL": 3,
     "XLE": 3,
     "SCHP": 3,
     "TQQQ": 1,
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 25.639999389648438,
-  "last_updated": "2026-11-07T02:36:09.273952+00:00"
+  "last_updated": "2026-11-09T02:27:42.298074+00:00"
 }
