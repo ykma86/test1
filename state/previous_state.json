@@ -19,12 +19,12 @@
     "LABU": 3,
     "XLE": 3,
     "SCHP": 3,
+    "GLD": 2,
     "TQQQ": 1,
     "UPRO": 1,
     "SPXL": 1,
     "SOXL": 1,
     "FNGU": 1,
-    "GLD": 1,
     "122630.KS": 1,
     "233740.KS": 1
   },
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 19.920000076293945,
-  "last_updated": "2026-11-09T23:16:33.109615+00:00"
+  "last_updated": "2026-11-10T04:31:18.226741+00:00"
 }
