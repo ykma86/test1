@@ -3,15 +3,15 @@
   "phase": "회피",
   "regime": "침체",
   "momentum_top3": [
+    "BIL",
     "FAS",
-    "SQQQ",
-    "SPXU"
+    "SQQQ"
   ],
   "momentum_scores": {
+    "BIL": 6,
     "FAS": 5,
     "SQQQ": 5,
     "SPXU": 5,
-    "BIL": 5,
     "XLP": 5,
     "XLV": 5,
     "SOXS": 4,
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 17.489999771118164,
-  "last_updated": "2026-11-11T23:17:42.462332+00:00"
+  "last_updated": "2026-11-12T03:40:10.429941+00:00"
 }
