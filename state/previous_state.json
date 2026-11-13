@@ -3,23 +3,23 @@
   "phase": "회피",
   "regime": "침체",
   "momentum_top3": [
-    "SOXS",
-    "TLT",
-    "SCHP"
+    "BIL",
+    "SQQQ",
+    "XLP"
   ],
   "momentum_scores": {
+    "BIL": 5,
+    "SQQQ": 4,
+    "XLP": 4,
+    "XLV": 4,
+    "FAS": 3,
+    "SPXU": 3,
     "SOXS": 3,
-    "TLT": 3,
-    "SCHP": 3,
-    "SQQQ": 2,
-    "SPXU": 2,
-    "BIL": 2,
+    "TLT": 2,
+    "XLE": 2,
+    "SCHP": 2,
     "UPRO": 1,
     "SOXL": 1,
-    "FAS": 1,
-    "XLE": 1,
-    "XLP": 1,
-    "XLV": 1,
     "233740.KS": 1,
     "TQQQ": 0,
     "SPXL": 0,
@@ -35,5 +35,5 @@
   "pc_level": "unknown",
   "fg_zone": "unknown",
   "last_vix": 18.700000762939453,
-  "last_updated": "2026-11-13T02:23:13.898392+00:00"
+  "last_updated": "2026-11-13T03:15:25.671473+00:00"
 }
