@@ -5,27 +5,27 @@
   "momentum_top3": [
     "BIL",
     "XLP",
-    "FAS"
+    "SOXS"
   ],
   "momentum_scores": {
     "BIL": 6,
     "XLP": 6,
+    "SOXS": 5,
     "FAS": 4,
     "SQQQ": 4,
-    "SOXS": 4,
+    "SPXU": 4,
     "XLV": 4,
-    "SPXU": 3,
-    "XLE": 3,
-    "TLT": 2,
-    "UPRO": 1,
+    "XLE": 2,
     "SOXL": 1,
-    "FNGU": 1,
     "GLD": 1,
+    "TLT": 1,
+    "SCHP": 1,
     "233740.KS": 1,
     "TQQQ": 0,
+    "UPRO": 0,
     "SPXL": 0,
     "LABU": 0,
-    "SCHP": 0,
+    "FNGU": 0,
     "122630.KS": 0
   },
   "falling_knife_active": false,
@@ -34,6 +34,6 @@
   "fed_bs_trend": "expanding",
   "pc_level": "unknown",
   "fg_zone": "unknown",
-  "last_vix": 20.56999969482422,
-  "last_updated": "2026-11-16T13:21:40.167066+00:00"
+  "last_vix": 22.90999984741211,
+  "last_updated": "2026-11-16T23:12:05.182316+00:00"
 }
